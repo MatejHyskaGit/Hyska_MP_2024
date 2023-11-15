@@ -96,7 +96,7 @@ public class GridMovement : MonoBehaviour
                     Debug.Log("trig out");
                     TriggerScript triggerscr = trigger.GetComponent<TriggerScript>();
 
-                    triggerscr.Trigger();
+                    triggerscr.Trigger(trigger.name);
                 }
             }
 

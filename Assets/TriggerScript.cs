@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TriggerScript : MonoBehaviour
 {
@@ -16,8 +17,9 @@ public class TriggerScript : MonoBehaviour
 
     }
 
-    public void Trigger()
+    public void Trigger(string name)
     {
-        Debug.Log("Triggered!!");
+        Debug.Log("You triggered" + name);
+        if(name == "trigger") SceneManager.LoadScene("Room1");
     }
 }
