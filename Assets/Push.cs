@@ -28,16 +28,7 @@ public class Push : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        System.Func<KeyCode, bool> inputFunction;
-        inputFunction = Input.GetKey;
-        if (inputFunction(KeyCode.LeftShift))
-        {
-            timeToMove = 0.10f;
-        }
-        if (!isMoving)
-        {
-            timeToMove = 0.20f;
-        }
+        
     }
 
     public IEnumerator Move(Vector2 direction)

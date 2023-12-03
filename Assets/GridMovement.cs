@@ -17,7 +17,8 @@ public class GridMovement : MonoBehaviour
     private bool isMoving;
     private Vector2 origPos, targetPos;
     private float timeToMove = 0.20f;
-    private float gridSize = 0.16f;
+    public float gridSize = 0.16f;
+    public Vector2 actualPos;
     BoxCollider2D bcollider;
     [SerializeField]
     public Animator animator;
@@ -36,15 +37,21 @@ public class GridMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        actualPos = (Vector2)transform.position + bcollider.offset;
         System.Func<KeyCode, bool> inputFunction;
         inputFunction = Input.GetKey;
-        if (inputFunction(KeyCode.LeftShift))
-        {
-            timeToMove = 0.10f;
-        }
+
         if (!isMoving)
         {
-            timeToMove = 0.20f;
+            if (inputFunction(KeyCode.LeftShift))
+            {
+                timeToMove = 0.10f;
+            }
+            else
+            {
+                timeToMove = 0.20f;
+            }
+
             if (inputFunction(KeyCode.W))
             {
                 Direction = Direction.up;
@@ -119,6 +126,7 @@ public class GridMovement : MonoBehaviour
             Debug.Log(objToPush.transform.position + (Vector3)bcolliderpush.offset);
             if (Math.Round(objToPush.transform.position.x + bcolliderpush.offset.x, 2) == Math.Round(newPos.x, 2) && Math.Round(objToPush.transform.position.y + bcolliderpush.offset.y, 2) == Math.Round(newPos.y, 2))
             {
+                timeToMove = 0.20f;
                 Debug.Log("Hello");
                 Push objpush = objToPush.GetComponent<Push>();
                 Debug.Log(objpush);

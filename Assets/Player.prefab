@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7906479528722999582}
   - component: {fileID: 5246253315386316458}
   - component: {fileID: 1722518144716763291}
+  - component: {fileID: 5903136684422814627}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -102,6 +103,8 @@ MonoBehaviour:
   groundTilemap: {fileID: 0}
   collisionTilemap: {fileID: 0}
   Direction: 0
+  gridSize: 0.16
+  actualPos: {x: 0, y: 0}
   animator: {fileID: 1722518144716763291}
 --- !u!61 &5246253315386316458
 BoxCollider2D:
@@ -169,3 +172,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5903136684422814627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6757278468562892152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87c9dc25c2b2184eaf4ed976f41d74f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
