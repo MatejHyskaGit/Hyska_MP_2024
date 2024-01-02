@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 057a668aadaf2b244aaf2aa79d3bcfd9
+  - enabled: 1
+    path: Assets/Scenes/MalirRoom1.unity
+    guid: b657a2b87eef9534e869d02c5585f84b
+  - enabled: 1
+    path: Assets/Scenes/MalirRoom2.unity
+    guid: fb717b0a67211c2499e8a6e0deca7807
   m_configObjects: {}

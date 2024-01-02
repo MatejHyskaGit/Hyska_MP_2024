@@ -19,7 +19,15 @@ public class TriggerScript : MonoBehaviour
 
     public void Trigger(string name)
     {
+        Scene scene = SceneManager.GetActiveScene();
+
+        if (scene.name == "MalirRoom2")
+        {
+            if (name == "DiraTrigger" || name == "DiraTrigger1") SceneManager.LoadScene("MalirRoom3");
+            if (name == "DoorBack" || name == "DoorBack1") SceneManager.LoadScene("MalirRoom1");
+        }
+        /*
         Debug.Log("You triggered" + name);
-        if(name == "trigger") SceneManager.LoadScene("Room1");
+        if(name == "trigger") SceneManager.LoadScene("Room1");*/
     }
 }
