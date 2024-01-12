@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2150995092514852944}
   - component: {fileID: 1366960850387458269}
   m_Layer: 0
-  m_Name: Door
-  m_TagString: Interactable
+  m_Name: DoorTrigger
+  m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,6 +94,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5496199226476881815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ee34c6a2544864cbc31c8f55b455dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c47b01d11355d449883e501d94eedee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

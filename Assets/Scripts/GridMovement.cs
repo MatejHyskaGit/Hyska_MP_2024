@@ -25,6 +25,7 @@ public class GridMovement : MonoBehaviour
     [SerializeField]
     public Animator animator;
     public Indestructible script;
+    public bool movementAllowed = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +49,7 @@ public class GridMovement : MonoBehaviour
         System.Func<KeyCode, bool> inputFunction;
         inputFunction = Input.GetKey;
 
-        if (!isMoving)
+        if ((!isMoving) && movementAllowed)
         {
             if (inputFunction(KeyCode.LeftShift))
             {
