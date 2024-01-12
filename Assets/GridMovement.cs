@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GridMovement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GridMovement : MonoBehaviour
 
     private GameObject[] ObjToPush;
     private GameObject[] Triggers;
+    private GameObject[] SpawnPoints;
     public Direction Direction = Direction.down;
     private bool isMoving;
     private Vector2 origPos, targetPos;
@@ -22,6 +24,7 @@ public class GridMovement : MonoBehaviour
     BoxCollider2D bcollider;
     [SerializeField]
     public Animator animator;
+    public Indestructible script;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,10 @@ public class GridMovement : MonoBehaviour
         Debug.Log(Triggers);
         bcollider = GetComponent<BoxCollider2D>();
         Debug.Log(bcollider);
+        SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        Debug.Log(SpawnPoints);
+        script = GameObject.Find("Hugo").GetComponent<Indestructible>();
+        MovePlayerToSpawn(script.lastSceneName);
     }
 
     // Update is called once per frame
@@ -151,7 +158,70 @@ public class GridMovement : MonoBehaviour
         vectrounded.y = (float)Math.Round(vector.y, digits);
         return vectrounded;
     }
+
+    public void MovePlayerToSpawn(string lastSceneName)
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        foreach (var spawnPoint in SpawnPoints)
+        {
+            if (scene.name == "MalirRoom1")
+            {
+                if (lastSceneName == "MalirRoom2")
+                {
+                    if (script.pos == "up")
+                    {
+                        if (spawnPoint.name == "SpawnPoint2")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                    else if (script.pos == "down")
+                    {
+                        if (spawnPoint.name == "SpawnPoint2d")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                }
+                else if (lastSceneName == "Room1")
+                {
+                    if (script.pos == "up")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                    else if (script.pos == "down")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1d")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                }
+            }
+            if (scene.name == "MalirRoom2")
+            {
+                if (script.pos == "up")
+                {
+                    if (spawnPoint.name == "SpawnPoint1")
+                    {
+                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                    }
+                }
+                else if (script.pos == "down")
+                {
+                    if (spawnPoint.name == "SpawnPoint1d")
+                    {
+                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 
 
