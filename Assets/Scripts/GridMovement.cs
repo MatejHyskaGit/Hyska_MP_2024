@@ -45,42 +45,30 @@ public class GridMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        actualPos = (Vector2)transform.position + bcollider.offset;
-        System.Func<KeyCode, bool> inputFunction;
-        inputFunction = Input.GetKey;
-
-        if ((!isMoving) && movementAllowed)
+        if (DialogueManager.instance.dialogueIsPlaying)
         {
-            if (inputFunction(KeyCode.LeftShift))
-            {
-                timeToMove = 0.10f;
-            }
-            else
-            {
-                timeToMove = 0.20f;
-            }
-
-            if (inputFunction(KeyCode.W))
-            {
-                Direction = Direction.up;
-                StartCoroutine(Move(Vector2.up));
-            }
-            else if (inputFunction(KeyCode.A))
-            {
-                Direction = Direction.left;
-                StartCoroutine(Move(Vector2.left));
-            }
-            else if (inputFunction(KeyCode.S))
-            {
-                Direction = Direction.down;
-                StartCoroutine(Move(Vector2.down));
-            }
-            else if (inputFunction(KeyCode.D))
-            {
-                Direction = Direction.right;
-                StartCoroutine(Move(Vector2.right));
-            }
+            return;
         }
+        actualPos = (Vector2)transform.position + bcollider.offset;
+#pragma warning disable CS0642
+        if (CheckForMovement(KeyCode.W, Vector2.up, Direction.up)) ;
+        else if (CheckForMovement(KeyCode.A, Vector2.left, Direction.left)) ;
+        else if (CheckForMovement(KeyCode.S, Vector2.down, Direction.down)) ;
+        else CheckForMovement(KeyCode.D, Vector2.right, Direction.right);
+#pragma warning restore CS0642
+    }
+
+    bool CheckForMovement(KeyCode pressedKey, Vector2 target, Direction direction)
+    {
+        if (Input.GetKey(pressedKey) && !isMoving && movementAllowed)
+        {
+            if (Input.GetKey(KeyCode.LeftShift)) timeToMove = 0.10f;
+            else timeToMove = 0.20f;
+            Direction = direction;
+            StartCoroutine(Move(target));
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator Move(Vector2 direction)

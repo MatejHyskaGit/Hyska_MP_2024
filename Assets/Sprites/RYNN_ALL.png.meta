@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c6af7a93321c0024aa2deb5612db83e6
+guid: 5525473f6f38b1844a42ca60cd058f1a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -113,9 +113,9 @@ TextureImporter:
       name: RYNN_FRONT
       rect:
         serializedVersion: 2
-        x: 0
+        x: 6
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ef0b2cfc7b808e42a2c3e5018fae192
-      internalID: 1904438653
+      spriteID: 56d85276fbd25a24895849b9bf1fe071
+      internalID: -296881027
       vertices: []
       indices: 
       edges: []
@@ -134,9 +134,9 @@ TextureImporter:
       name: RYNN_BACK
       rect:
         serializedVersion: 2
-        x: 34
+        x: 40
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a695b402c466c94095564e604933a5d
-      internalID: -2133332771
+      spriteID: 6ab0753177e2c3d46aa8af9634e3f560
+      internalID: 1413585348
       vertices: []
       indices: 
       edges: []
@@ -155,9 +155,9 @@ TextureImporter:
       name: RYNN_RIGHT
       rect:
         serializedVersion: 2
-        x: 68
+        x: 76
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d17622bb8202f94fbc4e296e21cbf1f
-      internalID: 330451918
+      spriteID: f9e4cd70407c1144992e306e4564fb70
+      internalID: -1821600418
       vertices: []
       indices: 
       edges: []
@@ -176,9 +176,9 @@ TextureImporter:
       name: RYNN_LEFT
       rect:
         serializedVersion: 2
-        x: 102
+        x: 109
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6f619e478cbacf4d8bf6c8b87616339
-      internalID: -607419911
+      spriteID: 392c85101935468488fc64d1211b0681
+      internalID: 1010266492
       vertices: []
       indices: 
       edges: []
@@ -197,9 +197,9 @@ TextureImporter:
       name: RYNN_FRONT_WALK_1
       rect:
         serializedVersion: 2
-        x: 136
+        x: 142
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 121a8145232ca6449ab1ae2afe612ebe
-      internalID: 112839581
+      spriteID: a659211326b107148ad5e7ef484818a8
+      internalID: -968026356
       vertices: []
       indices: 
       edges: []
@@ -218,9 +218,9 @@ TextureImporter:
       name: RYNN_FRONT_WALK_2
       rect:
         serializedVersion: 2
-        x: 170
+        x: 176
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eba1f60e78b44f5459de88b3f364b288
-      internalID: -1764991385
+      spriteID: ebf73871461408245aefe8289d4016ca
+      internalID: -2103881174
       vertices: []
       indices: 
       edges: []
@@ -239,9 +239,9 @@ TextureImporter:
       name: RYNN_BACK_WALK_1
       rect:
         serializedVersion: 2
-        x: 204
+        x: 210
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d64c9f3eec4da2e4d9c14fe56bf94a0e
-      internalID: -63511048
+      spriteID: 681d65d01e1ea364ca60647b4e6b5a4e
+      internalID: 85898087
       vertices: []
       indices: 
       edges: []
@@ -260,9 +260,9 @@ TextureImporter:
       name: RYNN_BACK_WALK_2
       rect:
         serializedVersion: 2
-        x: 238
+        x: 244
         y: 0
-        width: 17
+        width: 19
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -271,8 +271,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b153bae3e7bcf2468cfe63db716d74d
-      internalID: 1822279298
+      spriteID: e8cc9369ea03e964f996dba6ff30174b
+      internalID: 1524575620
       vertices: []
       indices: 
       edges: []
@@ -281,9 +281,9 @@ TextureImporter:
       name: RYNN_RIGHT_WALK_1
       rect:
         serializedVersion: 2
-        x: 272
+        x: 280
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -292,8 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73a57e846547dd8488b9b39b7f623908
-      internalID: -1910169142
+      spriteID: c038c815db6f17942ab2f282619f0f71
+      internalID: -1884475435
       vertices: []
       indices: 
       edges: []
@@ -302,9 +302,9 @@ TextureImporter:
       name: RYNN_RIGHT_WALK_2
       rect:
         serializedVersion: 2
-        x: 306
+        x: 310
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -313,8 +313,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8737cbb5c73d174da299c1d2c9f7d85
-      internalID: 913110730
+      spriteID: c9bce2c6971a9994487fb49717333916
+      internalID: 364027232
       vertices: []
       indices: 
       edges: []
@@ -323,9 +323,9 @@ TextureImporter:
       name: RYNN_LEFT_WALK_1
       rect:
         serializedVersion: 2
-        x: 323
+        x: 336
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -334,8 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e6ca9c7aaaba2f4c993830b654a967e
-      internalID: -1198053104
+      spriteID: 8aba4e5a32ed98147861f18c94d020d8
+      internalID: -1627146815
       vertices: []
       indices: 
       edges: []
@@ -344,9 +344,9 @@ TextureImporter:
       name: RYNN_LEFT_WALK_2
       rect:
         serializedVersion: 2
-        x: 357
+        x: 364
         y: 0
-        width: 17
+        width: 16
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -355,8 +355,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef5e53871d4d03949beb399d25e67734
-      internalID: -1625074152
+      spriteID: 553c927613a26ee4c9d051499a6fd0e5
+      internalID: -1100656027
       vertices: []
       indices: 
       edges: []
@@ -372,25 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      RYNN_ALL_1: 665845769
-      RYNN_ALL_10: -29193834
-      RYNN_ALL_12: -1669842484
-      RYNN_ALL_17: -2068949857
-      RYNN_ALL_3: 657815573
-      RYNN_ALL_6: -1300917003
-      RYNN_ALL_8: -501636765
-      RYNN_BACK: -2133332771
-      RYNN_BACK_WALK_1: -63511048
-      RYNN_BACK_WALK_2: 1822279298
-      RYNN_FRONT: 1904438653
-      RYNN_FRONT_WALK_1: 112839581
-      RYNN_FRONT_WALK_2: -1764991385
-      RYNN_LEFT: -607419911
-      RYNN_LEFT_WALK_1: -1198053104
-      RYNN_LEFT_WALK_2: -1625074152
-      RYNN_RIGHT: 330451918
-      RYNN_RIGHT_WALK_1: -1910169142
-      RYNN_RIGHT_WALK_2: 913110730
+      RYNN_BACK: 1413585348
+      RYNN_BACK_WALK_1: 85898087
+      RYNN_BACK_WALK_2: 1524575620
+      RYNN_FRONT: -296881027
+      RYNN_FRONT_WALK_1: -968026356
+      RYNN_FRONT_WALK_2: -2103881174
+      RYNN_LEFT: 1010266492
+      RYNN_LEFT_WALK_1: -1627146815
+      RYNN_LEFT_WALK_2: -1100656027
+      RYNN_RIGHT: -1821600418
+      RYNN_RIGHT_WALK_1: -1884475435
+      RYNN_RIGHT_WALK_2: 364027232
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

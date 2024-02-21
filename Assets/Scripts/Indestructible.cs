@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Indestructible : MonoBehaviour
 {
     public string lastSceneName;
@@ -10,21 +11,39 @@ public class Indestructible : MonoBehaviour
     public Animator transition;
     public float transitionTime = 1f;
     GridMovement MovementScript;
+    GameObject light2D;
 
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        MovementScript = GameObject.Find("Player").GetComponent<GridMovement>();
-        Debug.Log("Hybaj");
-        MovementScript.movementAllowed = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        try
+        {
+            MovementScript = GameObject.Find("Player").GetComponent<GridMovement>();
+        }
+        catch (System.Exception)
+        {
+        }
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            light2D = GameObject.Find("Global Light 2D");
+            //light2D.SetActive(false);
+        }
+        else light2D.SetActive(true);
+        if (MovementScript != null) MovementScript.movementAllowed = true;
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
     }
 
-    void OnSceneLoaded (Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         MovementScript = GameObject.Find("Player").GetComponent<GridMovement>();
         MovementScript.movementAllowed = true;
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            light2D.SetActive(true);
+        }
     }
 
     public void LoadScene(string sceneName)
@@ -46,8 +65,7 @@ public class Indestructible : MonoBehaviour
 
     IEnumerator LoadLevel(string sceneName)
     {
-        Debug.Log("Štop");
-        MovementScript.movementAllowed = false;
+        if (MovementScript != null) MovementScript.movementAllowed = false;
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
