@@ -43,8 +43,6 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
 
-    private bool canSkip = false;
-
     private bool submitSkip = false;
 
     private Coroutine displayLineCoroutine;
@@ -218,14 +216,6 @@ public class DialogueManager : MonoBehaviour
         DisplayChoices();
 
         canContinueToNextLine = true;
-        canSkip = false;
-    }
-
-    private IEnumerator CanSkip()
-    {
-        canSkip = false; //Making sure the variable is false.
-        yield return new WaitForSeconds(0.05f);
-        canSkip = true;
     }
 
     private void HideChoices()

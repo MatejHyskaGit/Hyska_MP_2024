@@ -54,3 +54,6 @@ TagManager:
   - name: UI
     uniqueID: 3766359023
     locked: 0
+  - name: Logo
+    uniqueID: 3736007343
+    locked: 0

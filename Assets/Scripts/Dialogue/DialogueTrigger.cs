@@ -9,7 +9,6 @@ public class DialogueTrigger : MonoBehaviour
 
     GameObject PlayerObject;
 
-    GridMovement MovementScript;
 
     Vector2 actualPos;
     BoxCollider2D bcollider;
@@ -17,7 +16,6 @@ public class DialogueTrigger : MonoBehaviour
     private void Start()
     {
         PlayerObject = GameObject.Find("Player");
-        MovementScript = PlayerObject.GetComponent<GridMovement>();
         bcollider = GetComponent<BoxCollider2D>();
         actualPos = (Vector2)transform.position + bcollider.offset;
     }
@@ -27,7 +25,7 @@ public class DialogueTrigger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
-            if (MovementScript.VectRound(MovementScript.actualPos + DirToVect(MovementScript.Direction), 2) == MovementScript.VectRound(actualPos, 2) && !DialogueManager.instance.dialogueIsPlaying)
+            if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(actualPos, 2) && !DialogueManager.instance.dialogueIsPlaying)
             {
                 Debug.Log("Dialogue Triggered");
                 DialogueManager.instance.EnterDialogueMode(inkJSON);
@@ -47,13 +45,13 @@ public class DialogueTrigger : MonoBehaviour
         switch (direction)
         {
             case Direction.down:
-                return (Vector2.down * MovementScript.gridSize);
+                return (Vector2.down * MovementManager.instance.gridSize);
             case Direction.right:
-                return (Vector2.right * MovementScript.gridSize);
+                return (Vector2.right * MovementManager.instance.gridSize);
             case Direction.up:
-                return (Vector2.up * MovementScript.gridSize);
+                return (Vector2.up * MovementManager.instance.gridSize);
             case Direction.left:
-                return (Vector2.left * MovementScript.gridSize);
+                return (Vector2.left * MovementManager.instance.gridSize);
             default:
                 return new Vector2();
         }

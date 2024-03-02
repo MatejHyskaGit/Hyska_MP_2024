@@ -5,13 +5,11 @@ using UnityEngine;
 public class InteractScript : MonoBehaviour
 {
     private GameObject[] Interactables;
-    GridMovement MovementScript;
     // Start is called before the first frame update
     void Start()
     {
         Interactables = GameObject.FindGameObjectsWithTag("Interactable");
         Debug.Log(Interactables);
-        MovementScript = GetComponent<GridMovement>();
     }
 
     // Update is called once per frame
@@ -23,7 +21,7 @@ public class InteractScript : MonoBehaviour
         {
             foreach (var inter in Interactables)
             {
-                if (MovementScript.VectRound(MovementScript.actualPos + DirToVect(MovementScript.Direction), 2) == MovementScript.VectRound((Vector2)inter.transform.position, 2))
+                if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound((Vector2)inter.transform.position, 2))
                 {
                     Debug.Log("Hey, you interacted with me!!");
                     WhenInteracted interacted = inter.GetComponent<WhenInteracted>();
@@ -41,13 +39,13 @@ public class InteractScript : MonoBehaviour
         switch (direction)
         {
             case Direction.down:
-                return (Vector2.down * MovementScript.gridSize);
+                return (Vector2.down * MovementManager.instance.gridSize);
             case Direction.right:
-                return (Vector2.right * MovementScript.gridSize);
+                return (Vector2.right * MovementManager.instance.gridSize);
             case Direction.up:
-                return (Vector2.up * MovementScript.gridSize);
+                return (Vector2.up * MovementManager.instance.gridSize);
             case Direction.left:
-                return (Vector2.left * MovementScript.gridSize);
+                return (Vector2.left * MovementManager.instance.gridSize);
             default:
                 return new Vector2();
         }
