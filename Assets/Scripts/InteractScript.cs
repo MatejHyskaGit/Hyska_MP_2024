@@ -15,12 +15,15 @@ public class InteractScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        System.Func<KeyCode, bool> inputFunction;
-        inputFunction = Input.GetKeyDown;
-        if (inputFunction(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             foreach (var inter in Interactables)
             {
+                // Debug.Log(MovementManager.instance.VectRound(MovementManager.instance.actualPos, 2));
+                // Debug.Log(DirToVect(MovementManager.instance.Direction));
+                // Debug.Log(MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2));
+                // Debug.Log(MovementManager.instance.VectRound((Vector2)inter.transform.position, 2));
                 if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound((Vector2)inter.transform.position, 2))
                 {
                     Debug.Log("Hey, you interacted with me!!");

@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: us^^
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 356
+        width: 46
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f528dd611a680d8418dbee876e9aa8f5
+      internalID: 478457897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +140,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TAVERNA_s_lidma_2_0: 93098384
+      TAVERNA_s_lidma_2_1: -42979814
+      TAVERNA_s_lidma_2_10: -1237673414
+      TAVERNA_s_lidma_2_11: 1685612126
+      TAVERNA_s_lidma_2_2: 1746078156
+      TAVERNA_s_lidma_2_4: -1741710016
+      TAVERNA_s_lidma_2_5: -1284141429
+      TAVERNA_s_lidma_2_6: 1354137454
+      TAVERNA_s_lidma_2_7: 321451241
+      TAVERNA_s_lidma_2_8: 1744003861
+      TAVERNA_s_lidma_2_9: 1563491138
+      us^^: 478457897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

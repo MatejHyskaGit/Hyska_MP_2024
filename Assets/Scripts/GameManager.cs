@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     public string pos = "";
     public Animator transition;
     public float transitionTime = 1f;
-    GameObject light2D;
+    [SerializeField] private GameObject light2D;
 
     public bool loading;
 
@@ -28,21 +29,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        if (SceneManager.GetActiveScene().name == "Menu")
-        {
-            light2D = GameObject.Find("Global Light 2D");
-            //light2D.SetActive(false);
-        }
-        else light2D.SetActive(true);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (SceneManager.GetActiveScene().name != "Menu")
+        switch (SceneManager.GetActiveScene().name)
         {
-            light2D.SetActive(true);
+            case "Menu": light2D.GetComponent<Light2D>().intensity = 0.035f; break;
+            case "MalirRoom1": light2D.GetComponent<Light2D>().intensity = 0.4f; break;
+            case "MalirRoom3": light2D.GetComponent<Light2D>().intensity = 0f; break;
+            default: light2D.GetComponent<Light2D>().intensity = 0.1f; break;
         }
     }
 

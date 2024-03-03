@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
 
-    private bool submitSkip = false;
+    public bool submitSkip = false;
 
     private Coroutine displayLineCoroutine;
 
@@ -55,6 +55,10 @@ public class DialogueManager : MonoBehaviour
 
     private const string LAYOUT_TAG = "layout";
 
+    private InkExternalFunctions inkExternalFunctions;
+
+    [SerializeField] private GameObject diePopup;
+
 
 
 
@@ -65,6 +69,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (instance != null) Debug.LogWarning("More than one Dialogue Manager in the scene");
         instance = this;
+
+        inkExternalFunctions = new InkExternalFunctions();
     }
 
     void Start()
@@ -87,8 +93,10 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             submitSkip = true;
         }
 
@@ -98,11 +106,13 @@ public class DialogueManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             HandleButtonMove(KeyCode.RightArrow);
             return;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             HandleButtonMove(KeyCode.LeftArrow);
             return;
         }
@@ -125,6 +135,8 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+
+        inkExternalFunctions.Bind(currentStory, diePopup);
 
         displayNameText.text = "???";
         portaitAnimator.Play("default");
@@ -154,23 +166,28 @@ public class DialogueManager : MonoBehaviour
                 StopCoroutine(displayLineCoroutine);
             }
 
-            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+            string nextLine = currentStory.Continue();
 
-
-            HandleTags(currentStory.currentTags);
+            if (nextLine.Equals("") && !currentStory.canContinue)
+            {
+                StartCoroutine(ExitDialogueMode());
+            }
+            else
+            {
+                HandleTags(currentStory.currentTags);
+                displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+            }
         }
         else
         {
-            Debug.Log("Can't do it, bai");
             StartCoroutine(ExitDialogueMode());
         }
     }
 
     private IEnumerator DisplayLine(string line)
     {
-        Debug.Log("Welcome to displayLine");
-        Debug.Log(submitSkip);
-        dialogueText.text = "";
+        dialogueText.text = line;
+        dialogueText.maxVisibleCharacters = 0;
 
         continueIcon.SetActive(false);
         HideChoices();
@@ -190,8 +207,7 @@ public class DialogueManager : MonoBehaviour
             if (submitSkip)
             {
                 submitSkip = false;
-                Debug.Log("Yeeah we here in the coroutine");
-                dialogueText.text = line;
+                dialogueText.maxVisibleCharacters = line.Length;
                 //yield return new WaitForSeconds(0.1f);
                 break;
             }
@@ -199,7 +215,6 @@ public class DialogueManager : MonoBehaviour
             if (letter == '<' || isAddingRichTextTag)
             {
                 isAddingRichTextTag = true;
-                dialogueText.text += letter;
                 if (letter == '>')
                 {
                     isAddingRichTextTag = false;
@@ -207,7 +222,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                dialogueText.text += letter;
+                dialogueText.maxVisibleCharacters++;
                 yield return new WaitForSeconds(typingSpeed);
             }
         }

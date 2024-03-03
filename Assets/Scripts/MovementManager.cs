@@ -66,8 +66,9 @@ public class MovementManager : MonoBehaviour
 
     bool CheckForMovement(KeyCode pressedKey, Vector2 target, Direction direction)
     {
-        if (Input.GetKey(pressedKey) && !isMoving /*&& !GameManager.instance.loading*/)
+        if (Input.GetKey(pressedKey) && !isMoving && !GameManager.instance.loading)
         {
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return false;
             if (Input.GetKey(KeyCode.LeftShift)) timeToMove = 0.10f;
             else timeToMove = 0.20f;
             Direction = direction;

@@ -281,7 +281,7 @@ public class ButtonManager : MonoBehaviour
                 {
                     case 0:
                         Debug.Log("Starting game on file " + selectedFileNum.ToString());
-                        GameManager.instance.LoadScene("MalirRoom1");
+                        GameManager.instance.LoadScene("Tavern");
                         break;
                     case 1:
                         Debug.Log("no in confirmation");
@@ -400,7 +400,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.instance.LoadScene("MalirRoom1");
+        GameManager.instance.LoadScene("Tavern");
     }
     public void Exit()
     {

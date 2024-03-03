@@ -1,30 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialogueTrigger : MonoBehaviour
 {
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
-    GameObject PlayerObject;
-
-
     Vector2 actualPos;
     BoxCollider2D bcollider;
 
+    [SerializeField] private GameObject NpcObject;
+
     private void Start()
     {
-        PlayerObject = GameObject.Find("Player");
         bcollider = GetComponent<BoxCollider2D>();
         actualPos = (Vector2)transform.position + bcollider.offset;
     }
 
+    public void StartInit()
+    {
+        if (SceneManager.GetActiveScene().name == "Tavern" && NpcObject.name == "InitDialogue")
+        {
+            DialogueManager.instance.EnterDialogueMode(inkJSON);
+        }
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(actualPos, 2) && !DialogueManager.instance.dialogueIsPlaying)
             {
                 Debug.Log("Dialogue Triggered");
