@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class DialogueTrigger : MonoBehaviour
 {
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] public TextAsset[] inkJSONArray;
+
+    public int dialogueIndex = 0;
 
     Vector2 actualPos;
     BoxCollider2D bcollider;
@@ -24,19 +26,28 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Tavern" && NpcObject.name == "InitDialogue")
         {
-            DialogueManager.instance.EnterDialogueMode(inkJSON);
+            DialogueManager.instance.EnterDialogueMode(inkJSONArray[0]);
         }
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !PauseMenuManager.isPaused)
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(actualPos, 2) && !DialogueManager.instance.dialogueIsPlaying)
             {
                 Debug.Log("Dialogue Triggered");
-                DialogueManager.instance.EnterDialogueMode(inkJSON);
+                EnterDialogue();
             }
+        }
+    }
+
+    public void EnterDialogue()
+    {
+        DialogueManager.instance.EnterDialogueMode(inkJSONArray[dialogueIndex]);
+        if (inkJSONArray.Length > dialogueIndex + 1)
+        {
+            if (inkJSONArray[dialogueIndex + 1] != null) dialogueIndex++;
         }
     }
 

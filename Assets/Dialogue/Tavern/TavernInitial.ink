@@ -1,2 +1,2 @@
-Co se to stalo? Kde jsem se tu vzala?... #speaker:Rynn #portait:rynn_neutral #layout:left
+Co se to stalo? Kde jsem se tu vzala?... #speaker:Rynn #portrait:rynn_neutral #layout:left
 Musím se dostat domů, někdo mě určitě bude hledat...

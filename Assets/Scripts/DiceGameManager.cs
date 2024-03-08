@@ -28,6 +28,9 @@ public class DiceGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerText;
     [SerializeField] private TextMeshProUGUI hintText;
 
+    [SerializeField] private TextMeshProUGUI mainPlayText;
+    [SerializeField] private TextMeshProUGUI hintText2;
+
     [SerializeField] private Animator[] diceAnimators;
 
     [SerializeField] private Sprite[] diceSprites;
@@ -38,13 +41,19 @@ public class DiceGameManager : MonoBehaviour
 
     [SerializeField] private Animator selectedDiceAnimator;
 
+    [SerializeField] private GameObject AnthonyNPC;
+
+    [SerializeField] private TextMeshProUGUI continueText;
+    [SerializeField] private Image continueIcon;
+
     private int selectedIndex = 0;
 
     private bool isPlaying = false;
 
     public bool DiceGameOn = false;
-
+#pragma warning disable CS0414
     private bool wait = false;
+#pragma warning restore CS0414
 
     private int dieIndex = 0;
 
@@ -55,6 +64,8 @@ public class DiceGameManager : MonoBehaviour
 
     private bool pressed = false;
 
+    private bool finishing = false;
+
     void Awake()
     {
         instance = this;
@@ -63,6 +74,7 @@ public class DiceGameManager : MonoBehaviour
             OpponentDiceValues[i].enabled = false;
             AllyDiceValues[i].enabled = false;
         }
+        InitializeGame();//when bulding game
     }
 
     void Update()
@@ -76,36 +88,64 @@ public class DiceGameManager : MonoBehaviour
         {
             DiceGameOn = true;
         }
+        /* if playtesting in unity
         if (!wait)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
             {
                 wait = true;
                 InitializeGame();
                 return;
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && isPlaying && !opponent)
+        }*/
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && isPlaying && !opponent)
         {
+            if (finishing) return;
             StartCoroutine(StopNextDie());
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && !isPlaying)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !isPlaying)
         {
             if (!pressed)
             {
                 pressed = true;
 
-                switch (selectedIndex)
+                if (continueText.enabled)
                 {
-                    case 0: StartCoroutine(PlayInit()); break;
-                    case 1: Exit(); break;
-                    default: return;
+                    if (continueText.text == "Konec")
+                    {
+                        Exit();
+                    }
+                    else if (continueText.text == "Znovu")
+                    {
+                        InitializeGame();
+                        mainPlayText.enabled = true;
+                        hintText2.enabled = true;
+                        continueText.enabled = false;
+                        continueIcon.enabled = false;
+
+                    }
+                }
+                else
+                {
+                    if (mainPlayText.enabled)
+                    {
+                        NewGame();
+                        StartCoroutine(PlayInit());
+                        return;
+                    }
+
+                    switch (selectedIndex)
+                    {
+                        case 0: mainPlayText.enabled = true; hintText2.enabled = true; break;
+                        case 1: Exit(); break;
+                        default: return;
+                    }
                 }
             }
 
         }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) && !isPlaying)
+        if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && !isPlaying)
         {
             if (selectedIndex != 0)
             {
@@ -114,7 +154,7 @@ public class DiceGameManager : MonoBehaviour
                 Debug.Log(selectedIndex);
             }
         }
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) && !isPlaying)
+        if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && !isPlaying)
         {
             if (selectedIndex != 1)
             {
@@ -151,8 +191,9 @@ public class DiceGameManager : MonoBehaviour
                 for (int i = 0; i < OpponentDiceValues.Length; i++)
                 {
                     OpponentDiceValues[i].enabled = true;
-                    OpponentDiceValues[i].text = opponentValues[i].ToString();
+                    OpponentDiceValues[i].text = "<color=#ff637d>" + opponentValues[i].ToString() + "</color>";
                 }
+                opponentName.enabled = true;
                 yield return null;
             }
             else
@@ -160,8 +201,11 @@ public class DiceGameManager : MonoBehaviour
                 for (int i = 0; i < AllyDiceValues.Length; i++)
                 {
                     AllyDiceValues[i].enabled = true;
-                    AllyDiceValues[i].text = allyValues[i].ToString();
+                    AllyDiceValues[i].text = "<color=#47c2ff>" + allyValues[i].ToString() + "</color>";
                 }
+                allyName.enabled = true;
+                finishing = true;
+                yield return new WaitForSeconds(1);
 
                 StartCoroutine(Finish());
             }
@@ -169,13 +213,48 @@ public class DiceGameManager : MonoBehaviour
         else yield return null;
     }
 
-    void InitializeGame()
+    void NewGame()
     {
         opponent = true;
 
         playerText.enabled = true;
 
+        allyName.enabled = false;
+        opponentName.enabled = false;
+
+        allyDiceResult.enabled = false;
+        opponentDiceResult.enabled = false;
+
         diceContainer.SetActive(true);
+
+        mainPlayText.enabled = false;
+        hintText2.enabled = false;
+
+        resultText.enabled = false;
+
+        for (int i = 0; i < OpponentDiceValues.Length; i++)
+        {
+            OpponentDiceValues[i].enabled = false;
+            AllyDiceValues[i].enabled = false;
+        }
+    }
+
+    void InitializeGame()
+    {
+        opponent = true;
+
+        pressed = false;
+
+        continueIcon.enabled = false;
+        continueText.enabled = false;
+
+        mainPlayText.enabled = true;
+        hintText2.enabled = true;
+
+        playerText.enabled = false;
+        hintText.enabled = false;
+
+        diceContainer.SetActive(false);
 
         allyName.enabled = false;
         opponentName.enabled = false;
@@ -194,14 +273,12 @@ public class DiceGameManager : MonoBehaviour
 
     IEnumerator Finish()
     {
+        finishing = true;
+
+
         playerText.enabled = false;
         hintText.enabled = false;
         diceContainer.SetActive(false);
-
-        yield return new WaitForSeconds(1);
-
-        allyName.enabled = true;
-        opponentName.enabled = true;
 
         yield return new WaitForSeconds(1);
 
@@ -213,21 +290,21 @@ public class DiceGameManager : MonoBehaviour
         {
             _allydiceresult += val;
         }
-        allyDiceResult.text = _allydiceresult.ToString();
+        allyDiceResult.text = "<color=#47c2ff>" + _allydiceresult.ToString() + "</color>";
 
         int _opponentdiceresult = 0;
         foreach (int val in opponentValues)
         {
             _opponentdiceresult += val;
         }
-        opponentDiceResult.text = _opponentdiceresult.ToString();
+        opponentDiceResult.text = "<color=#ff637d>" + _opponentdiceresult.ToString() + "</color>";
 
         yield return new WaitForSeconds(1);
 
         resultText.enabled = true;
-        if (_allydiceresult > _opponentdiceresult) resultText.text = "Vyhráváš!";
+        if (_allydiceresult > _opponentdiceresult) resultText.text = "<color=#47c2ff>Vyhráváš!</color>";
         else if (_allydiceresult == _opponentdiceresult) resultText.text = "Remíza";
-        else resultText.text = "Protihráč vyhrál";
+        else resultText.text = "<color=#ff637d>Anthony</color> vyhrál";
 
         yield return new WaitForSeconds(1);
 
@@ -235,9 +312,22 @@ public class DiceGameManager : MonoBehaviour
         opponentValues = new int[3];
         opponent = true;
         isPlaying = false;
+        //single button text
+        if (GameManager.instance.diceGameCount == 0)
+        {
+            continueText.enabled = true;
+            if (resultText.text == "Remíza") continueText.text = "Znovu";
+            else continueText.text = "Konec";
+            continueIcon.enabled = true;
+        }
+        else
+        {
+            selectedIndex = 0;
+            choiceAnimator.Play(selectedIndex.ToString());
+        }
+        if (resultText.text != "Remíza") GameManager.instance.diceGameCount++;
         pressed = false;
-        selectedIndex = 0;
-        choiceAnimator.Play(selectedIndex.ToString());
+        finishing = false;
 
     }
 
@@ -245,7 +335,7 @@ public class DiceGameManager : MonoBehaviour
     {
         if (opponent == true)
         {
-            playerText.text = "Protihráč je na řadě";
+            playerText.text = "<color=#ff637d>Anthony</color> je na řadě";
             hintText.enabled = false;
             dieIndex = 0;
             selectedDiceAnimator.Play(dieIndex.ToString());
@@ -257,16 +347,16 @@ public class DiceGameManager : MonoBehaviour
             }
             for (int i = 0; i < 3; i++)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
                 StartCoroutine(StopNextDie());
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             opponent = false;
             StartCoroutine(PlayInit());
         }
         else
         {
-            playerText.text = "Jsi na řadě";
+            playerText.text = "<color=#47c2ff>Jsi</color> na řadě";
             hintText.enabled = true;
             isPlaying = true;
             dieIndex = 0;
@@ -279,48 +369,25 @@ public class DiceGameManager : MonoBehaviour
             }
             yield return null;
         }
-
-        /*
-        resultText.text = "";
-        for (int i = 0; i < AllyDiceValues.Length; i++)
-        {
-            AllyDiceValues[i].text = "0";
-            OpponentDiceValues[i].text = "0";
-        }
-        allyDiceResult.text = "0";
-        opponentDiceResult.text = "0";
-        isPlaying = true;
-        int AllyAll = 0;
-        int OpponentAll = 0;
-        var random = new System.Random();
-        for (int i = 0; i < AllyDiceValues.Length; i++)
-        {
-            yield return new WaitForSeconds(1f);
-            int AllyRandom = random.Next(1, 7);
-            AllyDiceValues[i].text = AllyRandom.ToString();
-            AllyAll += AllyRandom;
-            allyDiceResult.text = AllyAll.ToString();
-
-            int OpponentRandom = random.Next(1, 7);
-            OpponentDiceValues[i].text = OpponentRandom.ToString();
-            OpponentAll += OpponentRandom;
-            opponentDiceResult.text = OpponentAll.ToString();
-        }
-
-        if (AllyAll > OpponentAll) resultText.text = "Vyhráváš!";
-        else if (AllyAll == OpponentAll) resultText.text = "Remíza";
-        else resultText.text = "Protihráč vyhrál";
-        playText.text = "Znovu";
-        isPlaying = false;
-        selectedIndex = 0;
-        choiceAnimator.Play(selectedIndex.ToString());*/
     }
     void Exit()
     {
         playText.text = "Hrát";
-        resultText.text = "";
         selectedIndex = 0;
         wait = false;
         diePopupObject.SetActive(false);
+        DialogueTrigger trigger = AnthonyNPC.GetComponentInChildren<DialogueTrigger>();
+        switch (resultText.text)
+        {
+            case "<color=#47c2ff>Vyhráváš!</color>":
+                trigger.EnterDialogue(); trigger.dialogueIndex++; break;
+            case "<color=#ff637d>Anthony</color> vyhrál":
+                trigger.dialogueIndex++; trigger.EnterDialogue(); break;
+            default:
+                Debug.Log("How did we get here?");
+                return;
+        }
+
+
     }
 }

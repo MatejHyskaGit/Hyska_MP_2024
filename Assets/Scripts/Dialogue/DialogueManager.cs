@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [SerializeField] private TextMeshProUGUI displayNameText;
-    [SerializeField] private Animator portaitAnimator;
+    [SerializeField] private Animator portraitAnimator;
 
 
     [Header("Choices UI")]
@@ -51,13 +51,14 @@ public class DialogueManager : MonoBehaviour
 
     private const string SPEAKER_TAG = "speaker";
 
-    private const string PORTAIT_TAG = "portait";
+    private const string PORTRAIT_TAG = "portrait";
 
     private const string LAYOUT_TAG = "layout";
 
     private InkExternalFunctions inkExternalFunctions;
 
     [SerializeField] private GameObject diePopup;
+    [SerializeField] private GameObject anthonyNPC;
 
 
 
@@ -94,7 +95,7 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             submitSkip = true;
@@ -136,16 +137,16 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
-        inkExternalFunctions.Bind(currentStory, diePopup);
+        inkExternalFunctions.Bind(currentStory, diePopup, anthonyNPC);
 
         displayNameText.text = "???";
-        portaitAnimator.Play("default");
+        portraitAnimator.Play("default");
         layoutAnimator.Play("right");
 
         ContinueStory();
     }
 
-    private IEnumerator ExitDialogueMode()
+    public IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -259,8 +260,8 @@ public class DialogueManager : MonoBehaviour
                 case SPEAKER_TAG:
                     displayNameText.text = tagValue;
                     break;
-                case PORTAIT_TAG:
-                    portaitAnimator.Play(tagValue);
+                case PORTRAIT_TAG:
+                    portraitAnimator.Play(tagValue);
                     break;
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);

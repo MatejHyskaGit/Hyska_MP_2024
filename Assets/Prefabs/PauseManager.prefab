@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2155447279683586852}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,9 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13041f07daa88e24fae017259b5ae56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseCanvas: {fileID: 0}
   PausePanel: {fileID: 0}
-  pauseButtonObjects:
+  pauseAnimator: {fileID: 0}
+  SettingsPanel: {fileID: 0}
+  settingsAnimator: {fileID: 0}
+  optionsSoundImages:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  VsyncImageSwitch: {fileID: 0}
+  volumeSpriteOn: {fileID: -1143303550, guid: 65e05f99367bd234590d022af7f062e2, type: 3}
+  volumeSpriteOff: {fileID: -1138192362, guid: 65e05f99367bd234590d022af7f062e2, type: 3}
+  switchSpriteOn: {fileID: -1896948713, guid: 49803ccd3344ddb4a9a0d7055da09b8a, type: 3}
+  switchSpriteOff: {fileID: 1516640588, guid: 49803ccd3344ddb4a9a0d7055da09b8a, type: 3}

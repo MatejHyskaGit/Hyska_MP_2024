@@ -57,16 +57,20 @@ public class MovementManager : MonoBehaviour
         }
         actualPos = (Vector2)transform.position + bcollider.offset;
 #pragma warning disable CS0642
-        if (CheckForMovement(KeyCode.W, Vector2.up, Direction.up)) ;
-        else if (CheckForMovement(KeyCode.A, Vector2.left, Direction.left)) ;
-        else if (CheckForMovement(KeyCode.S, Vector2.down, Direction.down)) ;
-        else CheckForMovement(KeyCode.D, Vector2.right, Direction.right);
+        if (CheckForMovement(KeyCode.W, Vector2.up, Direction.up) || CheckForMovement(KeyCode.UpArrow, Vector2.up, Direction.up)) ;
+        else if (CheckForMovement(KeyCode.A, Vector2.left, Direction.left) || CheckForMovement(KeyCode.LeftArrow, Vector2.left, Direction.left)) ;
+        else if (CheckForMovement(KeyCode.S, Vector2.down, Direction.down) || CheckForMovement(KeyCode.DownArrow, Vector2.down, Direction.down)) ;
+        else if (CheckForMovement(KeyCode.D, Vector2.right, Direction.right) || CheckForMovement(KeyCode.RightArrow, Vector2.right, Direction.right)) ;
 #pragma warning restore CS0642
+        else
+        {
+            return;
+        }
     }
 
     bool CheckForMovement(KeyCode pressedKey, Vector2 target, Direction direction)
     {
-        if (Input.GetKey(pressedKey) && !isMoving && !GameManager.instance.loading)
+        if (Input.GetKey(pressedKey) && !isMoving && !GameManager.instance.loading && !PauseMenuManager.isPaused)
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return false;
             if (Input.GetKey(KeyCode.LeftShift)) timeToMove = 0.10f;

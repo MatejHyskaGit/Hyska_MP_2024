@@ -36,6 +36,14 @@ public class ButtonManager : MonoBehaviour
 
     [Header("Options Block")]
     [SerializeField] private GameObject[] optionsObjects;
+    private Image[] optionsSoundImages;
+    [SerializeField] private Image VsyncImageSwitch;
+    [SerializeField] private Sprite volumeSpriteOn;
+    [SerializeField] private Sprite volumeSpriteOff;
+    [SerializeField] private Sprite switchSpriteOn;
+    [SerializeField] private Sprite switchSpriteOff;
+    [SerializeField] private Animator optionsAnimator;
+    bool insideVolume = false;
 
 
     int selectedInnerIndex = 0;
@@ -54,6 +62,9 @@ public class ButtonManager : MonoBehaviour
 
     private bool runCustomUpdate = false;
 
+    private bool NewGameUpdate = false;
+    private bool OptionsUpdate = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +73,10 @@ public class ButtonManager : MonoBehaviour
         yesNoAnimator = yesNoPart.GetComponent<Animator>();
 
         saveFileImages = new Image[saveFilesObjects.Length];
+
+        optionsSoundImages = new Image[optionsObjects.Length];
+
+
 
         int index = 0;
         foreach (GameObject obj in saveFilesObjects)
@@ -80,6 +95,25 @@ public class ButtonManager : MonoBehaviour
             index++;
         }
 
+        index = 0;
+        foreach (GameObject obj in optionsObjects)
+        {
+            optionsSoundImages[index] = obj.GetComponent<Image>();
+            index++;
+        }
+
+
+        foreach (Image soundimage in optionsSoundImages)
+        {
+            soundimage.sprite = volumeSpriteOff;
+        }
+        for (int i = 0; i < GameManager.instance.Volume; i++)
+        {
+            optionsSoundImages[i].sprite = volumeSpriteOn;
+        }
+        if (QualitySettings.vSyncCount == 0) VsyncImageSwitch.sprite = switchSpriteOff;
+        else if (QualitySettings.vSyncCount == 1) VsyncImageSwitch.sprite = switchSpriteOn;
+
         leftButtons = new Button[leftButtonObjects.Length];
         rightButtons = new Button[rightButtonObjects.Length];
 
@@ -96,6 +130,8 @@ public class ButtonManager : MonoBehaviour
             index++;
         }
 
+
+
         selectedIndex = 0;
         leftAnimator.Play(selectedIndex.ToString());
     }
@@ -106,7 +142,8 @@ public class ButtonManager : MonoBehaviour
         {
             if (runCustomUpdate)
             {
-                NewGameLoop();
+                if (NewGameUpdate) NewGameLoop();
+                else if (OptionsUpdate) OptionsLoop();
             }
             else
             {
@@ -121,7 +158,7 @@ public class ButtonManager : MonoBehaviour
                                 break;
                             case 1: //zmáčnuto Quit
                                     // ukaž are you sure, po vybrání exit
-                                throw new NotImplementedException();
+                                Exit(); break;
                             default: return;
                         }
                         return;
@@ -133,7 +170,7 @@ public class ButtonManager : MonoBehaviour
                             case 0: NewGame(); return;
                             case 1: break;
                             case 2: break;
-                            case 3: break;
+                            case 3: Options(); break;
                             case 4: break;
                             case 5:
                                 ChangeSide();
@@ -181,6 +218,7 @@ public class ButtonManager : MonoBehaviour
                 saveFilePart.SetActive(true);
                 rightAnimator.speed = 1f;
                 runCustomUpdate = false;
+                NewGameUpdate = false;
                 selectedIndex = 0;
                 rightAnimator.Play(selectedIndex.ToString());
                 return;
@@ -195,6 +233,7 @@ public class ButtonManager : MonoBehaviour
                     saveFilePart.SetActive(true);
                     rightAnimator.speed = 1f;
                     runCustomUpdate = false;
+                    NewGameUpdate = false;
                     selectedIndex = 0;
                     rightAnimator.Play(selectedIndex.ToString());
                     return;
@@ -203,20 +242,10 @@ public class ButtonManager : MonoBehaviour
                 if (GameManager.instance.Saves[selectedInnerIndex])
                 {
                     newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Přepsat stávající hru?";
-                    UnityEngine.Vector3 pos = newGameTextObject.transform.position;
-                    Debug.Log(pos);
-                    pos.x = 2.75f;
-                    Debug.Log(pos);
-                    newGameTextObject.transform.position = pos;
                 }
                 else
                 {
                     newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Začít novou hru?";
-                    UnityEngine.Vector3 pos = newGameTextObject.transform.position;
-                    Debug.Log(pos);
-                    pos.x = 3.9f;
-                    Debug.Log(pos);
-                    newGameTextObject.transform.position = pos;
                 }
                 saveFilePart.SetActive(false);
                 selectedFile = true;
@@ -326,6 +355,126 @@ public class ButtonManager : MonoBehaviour
         selectedFileNum = 0;
         saveFileAnimator.Play(selectedInnerIndex.ToString());
         runCustomUpdate = true;
+        NewGameUpdate = true;
+    }
+
+    void Options()
+    {
+        rightAnimator.speed = 0f;
+
+        selectedInnerIndex = 0;
+        optionsAnimator.Play(selectedInnerIndex.ToString());
+        insideVolume = false;
+
+        runCustomUpdate = true;
+        OptionsUpdate = true;
+    }
+
+    void OptionsLoop()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            if (!insideVolume)
+            {
+                if (selectedInnerIndex != 2) selectedInnerIndex++;
+                optionsAnimator.Play(selectedInnerIndex.ToString());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+
+            if (!insideVolume)
+            {
+                if (selectedInnerIndex != 0) selectedInnerIndex--;
+                optionsAnimator.Play(selectedInnerIndex.ToString());
+            }
+
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            if (insideVolume)
+            {
+                if (GameManager.instance.Volume != 0) GameManager.instance.Volume--;
+                foreach (Image soundimage in optionsSoundImages)
+                {
+                    soundimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.Volume; i++)
+                {
+                    optionsSoundImages[i].sprite = volumeSpriteOn;
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            if (insideVolume)
+            {
+                if (GameManager.instance.Volume != 10) GameManager.instance.Volume++;
+                foreach (Image soundimage in optionsSoundImages)
+                {
+                    soundimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.Volume; i++)
+                {
+                    optionsSoundImages[i].sprite = volumeSpriteOn;
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (insideVolume)
+            {
+                optionsAnimator.speed = 1f;
+                insideVolume = false;
+                return;
+            }
+
+
+            switch (selectedInnerIndex)
+            {
+                case 0:
+                    insideVolume = true;
+                    optionsAnimator.speed = 0f;
+                    break;
+                case 1:
+                    if (VsyncImageSwitch.sprite == switchSpriteOff)
+                    {
+                        VsyncImageSwitch.sprite = switchSpriteOn;
+                        QualitySettings.vSyncCount = 1;
+                    }
+                    else if (VsyncImageSwitch.sprite == switchSpriteOn)
+                    {
+                        VsyncImageSwitch.sprite = switchSpriteOff;
+                        QualitySettings.vSyncCount = 0;
+                    }
+                    break;
+                case 2:
+                    rightAnimator.speed = 1f;
+                    optionsAnimator.Play("default");
+                    runCustomUpdate = false;
+                    OptionsUpdate = false;
+                    return;
+                default: return;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (insideVolume)
+            {
+                optionsAnimator.speed = 1f;
+                insideVolume = false;
+                return;
+            }
+            else
+            {
+                rightAnimator.speed = 1f;
+                optionsAnimator.Play("default");
+                runCustomUpdate = false;
+                OptionsUpdate = false;
+                return;
+            }
+        }
+
     }
 
     void ChangeSide()

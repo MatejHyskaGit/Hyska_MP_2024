@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -18,20 +19,32 @@ public class GameManager : MonoBehaviour
 
     public List<bool> Saves = new() { false, false, true, false };
 
+    public int diceGameCount = 0;
+
+    public int Volume;
+
 
     void Awake()
     {
-        if (instance != null) Debug.LogWarning("More than one Game Manager in the scene");
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
+        Volume = 5;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

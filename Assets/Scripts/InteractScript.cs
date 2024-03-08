@@ -15,7 +15,7 @@ public class InteractScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !PauseMenuManager.isPaused)
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             foreach (var inter in Interactables)
