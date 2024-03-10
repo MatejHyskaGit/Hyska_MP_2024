@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -59,6 +60,10 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject diePopup;
     [SerializeField] private GameObject anthonyNPC;
+
+    [SerializeField] private GameObject statueLeft;
+    [SerializeField] private GameObject statueMid;
+    [SerializeField] private GameObject statueRight;
 
 
 
@@ -137,7 +142,17 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
-        inkExternalFunctions.Bind(currentStory, diePopup, anthonyNPC);
+        if(SceneManager.GetActiveScene().name == "Tavern")
+        {
+            inkExternalFunctions.Bind(currentStory, diePopup);
+            inkExternalFunctions.Bind(currentStory, anthonyNPC);
+        }
+        if(SceneManager.GetActiveScene().name == "MalirRoom3")
+        {
+            inkExternalFunctions.Bind(currentStory, statueLeft);
+            inkExternalFunctions.Bind(currentStory, statueMid);
+            inkExternalFunctions.Bind(currentStory, statueRight);
+        }
 
         displayNameText.text = "???";
         portraitAnimator.Play("default");
@@ -149,6 +164,8 @@ public class DialogueManager : MonoBehaviour
     public IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.1f);
+
+        //inkExternalFunctions.Unbind(currentStory);
 
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);

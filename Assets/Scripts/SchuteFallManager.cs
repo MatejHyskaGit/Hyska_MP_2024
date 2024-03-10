@@ -19,8 +19,15 @@ public class SchuteFallManager : MonoBehaviour
 
     public void StartChute()
     {
-        CameraVC.Follow = null;
-        CameraAnimator.Play("CameraFall");
+        if(GameManager.instance.lastSceneName == "MalirRoom4")
+        {
+            SetFollowPlayer();
+        }
+        else
+        {
+            CameraVC.Follow = null;
+            CameraAnimator.Play("CameraFall");
+        }
     }
     public void SetFollowPlayer()
     {

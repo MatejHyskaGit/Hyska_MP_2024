@@ -13,14 +13,25 @@ public class TriggerScript : MonoBehaviour
         {
             if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom2", "up");
             if (name == "DoorToNext1") GameManager.instance.LoadScene("MalirRoom2", "down");
-            if (name == "DoorBack") GameManager.instance.LoadScene("Room1", "up");
-            if (name == "DoorBack1") GameManager.instance.LoadScene("Room1", "down");
+            if (name == "DoorBack") GameManager.instance.LoadScene("Tavern");
+            if (name == "DoorBack1") GameManager.instance.LoadScene("Tavern");
         }
         if (scene.name == "MalirRoom2")
         {
             if (name == "DiraTrigger" || name == "DiraTrigger1") GameManager.instance.LoadScene("MalirRoom3");
             if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom1", "up");
             if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom1", "down");
+        }
+        if (scene.name == "MalirRoom3")
+        {
+            if (name == "DoorToNext" && !StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "up");
+            if (name == "DoorToNext1" && !StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "down");
+        }
+        if (scene.name == "MalirRoom4")
+        {
+            if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom5");
+            if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom3", "up");
+            if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom3", "down");
         }
 
         /*

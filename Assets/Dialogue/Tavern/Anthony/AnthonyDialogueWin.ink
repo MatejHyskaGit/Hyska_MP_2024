@@ -1,3 +1,4 @@
+EXTERNAL getFlowerSack()
 Konečně někdo s kým je zábava hrát. #layout:left #portrait:anthony_neutral #speaker:Anthony
 No dobrá, sázka je sázka, tohle je teď tvoje. 
 Ale stejně si dávej pozor, ne že se hned vrhneš z okna jen proto, že můžeš... 
@@ -10,3 +11,4 @@ Můžeš mu to tam hodit? Nemám na něj celej život haha, chápeš?-
 Nevadí. #portrait:anthony_neutral #speaker:Anthony
 Prostě mu to tam hoď, a hele, když budeš mít dlouhou chvíli, stav se si zahrát. 
 Třeba i pro zábavu, bude to věčnost, než se tady chudák Gary vzbudí. 
+~getFlowerSack()

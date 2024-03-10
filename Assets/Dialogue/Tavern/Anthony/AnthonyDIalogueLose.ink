@@ -1,3 +1,4 @@
+EXTERNAL getFlowerSack()
 Škoda, třeba to příště vyjde líp. #layout:left #portrait:anthony_neutral #speaker:Anthony
 Hele když už tě tu mám, můžeš pro mě něco udělat? #layout:left #portrait:anthony_neutral #speaker:Anthony
 Tenhle malíř, Francis, bydlí hned tady za rohem, už tři dlouhý tejdny nevytáhl paty z domu.
@@ -7,3 +8,4 @@ Můžeš mu to tam hodit? Nemám na něj celej život haha, chápeš?-
 Nevadí. #portrait:anthony_neutral #speaker:Anthony
 Prostě mu to tam hoď, a hele, když budeš mít dlouhou chvíli, stav se si zahrát. 
 Třeba i pro zábavu, bude to věčnost, než se tady chudák Gary vzbudí. 
+~getFlowerSack()

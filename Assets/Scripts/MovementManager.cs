@@ -38,13 +38,13 @@ public class MovementManager : MonoBehaviour
     {
 
         ObjToPush = GameObject.FindGameObjectsWithTag("ObjToPush");
-        Debug.Log(ObjToPush);
+        //Debug.Log(ObjToPush);
         Triggers = GameObject.FindGameObjectsWithTag("Trigger");
-        Debug.Log(Triggers);
+        ///Debug.Log(Triggers);
         bcollider = GetComponent<BoxCollider2D>();
-        Debug.Log(bcollider);
+        //Debug.Log(bcollider);
         SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        Debug.Log(SpawnPoints);
+        //Debug.Log(SpawnPoints);
         if (GameManager.instance != null) MovePlayerToSpawn(GameManager.instance.lastSceneName);
     }
 
@@ -103,11 +103,11 @@ public class MovementManager : MonoBehaviour
             transform.position = targetPos;
             foreach (var trigger in Triggers)
             {
-                Debug.Log(trigger.transform.position.x);
-                Debug.Log(trigger.transform.position.y);
+                //Debug.Log(trigger.transform.position.x);
+                //Debug.Log(trigger.transform.position.y);
                 if (Math.Round((transform.position.x + bcollider.offset.x), 2) == Math.Round(trigger.transform.position.x, 2) && Math.Round((transform.position.y + bcollider.offset.y), 2) == Math.Round(trigger.transform.position.y, 2))
                 {
-                    Debug.Log("trig out");
+                    //Debug.Log("trig out");
                     TriggerScript triggerscr = trigger.GetComponent<TriggerScript>();
 
                     triggerscr.Trigger(trigger.name);
@@ -129,8 +129,8 @@ public class MovementManager : MonoBehaviour
         foreach (var objToPush in ObjToPush)
         {
             BoxCollider2D bcolliderpush = objToPush.GetComponent<BoxCollider2D>();
-            Debug.Log(newPos);
-            Debug.Log(objToPush.transform.position + (Vector3)bcolliderpush.offset);
+            //Debug.Log(newPos);
+            //Debug.Log(objToPush.transform.position + (Vector3)bcolliderpush.offset);
             if (Math.Round(objToPush.transform.position.x + bcolliderpush.offset.x, 2) == Math.Round(newPos.x, 2) && Math.Round(objToPush.transform.position.y + bcolliderpush.offset.y, 2) == Math.Round(newPos.y, 2))
             {
                 timeToMove = 0.20f;
@@ -164,6 +164,16 @@ public class MovementManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         foreach (var spawnPoint in SpawnPoints)
         {
+            if(scene.name == "Tavern")
+            {
+                if (lastSceneName == "MalirRoom1")
+                {
+                    if (spawnPoint.name == "SpawnPoint1")
+                    {
+                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                    }
+                }
+            }
             if (scene.name == "MalirRoom1")
             {
                 if (lastSceneName == "MalirRoom2")
@@ -183,7 +193,27 @@ public class MovementManager : MonoBehaviour
                         }
                     }
                 }
-                else if (lastSceneName == "Room1")
+            }
+            if (scene.name == "MalirRoom2")
+            {
+                if (GameManager.instance.pos == "up")
+                {
+                    if (spawnPoint.name == "SpawnPoint1")
+                    {
+                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                    }
+                }
+                else if (GameManager.instance.pos == "down")
+                {
+                    if (spawnPoint.name == "SpawnPoint1d")
+                    {
+                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                    }
+                }
+            }
+            if(scene.name == "MalirRoom4")
+            {
+                if(lastSceneName == "MalirRoom3")
                 {
                     if (GameManager.instance.pos == "up")
                     {
@@ -200,19 +230,9 @@ public class MovementManager : MonoBehaviour
                         }
                     }
                 }
-            }
-            if (scene.name == "MalirRoom2")
-            {
-                if (GameManager.instance.pos == "up")
+                else if(lastSceneName == "MalirRoom5")
                 {
-                    if (spawnPoint.name == "SpawnPoint1")
-                    {
-                        transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
-                    }
-                }
-                else if (GameManager.instance.pos == "down")
-                {
-                    if (spawnPoint.name == "SpawnPoint1d")
+                    if (spawnPoint.name == "SpawnPoint2")
                     {
                         transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
                     }

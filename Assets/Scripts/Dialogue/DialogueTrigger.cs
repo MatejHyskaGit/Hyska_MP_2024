@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,19 +14,32 @@ public class DialogueTrigger : MonoBehaviour
 
     Vector2 actualPos;
     BoxCollider2D bcollider;
+    Vector2[] actualPositions;
+    BoxCollider2D[] bcolliders;
 
     [SerializeField] private GameObject NpcObject;
 
     private void Start()
     {
-        bcollider = GetComponent<BoxCollider2D>();
-        actualPos = (Vector2)transform.position + bcollider.offset;
+        //bcollider = GetComponent<BoxCollider2D>();
+        //actualPos = (Vector2)transform.position + bcollider.offset;
+
+        bcolliders = GetComponents<BoxCollider2D>();
+        actualPositions = new Vector2[bcolliders.Length];
+        int index = 0;
+        foreach (var collider in bcolliders)
+        {
+            actualPositions[index] = (Vector2)transform.position + collider.offset;
+            index++;
+        }
+
     }
 
     public void StartInit()
     {
-        if (SceneManager.GetActiveScene().name == "Tavern" && NpcObject.name == "InitDialogue")
+        if (SceneManager.GetActiveScene().name == "Tavern" && NpcObject.name == "InitDialogue" && !GameManager.instance.InitDialogue)
         {
+            GameManager.instance.InitDialogue = true;
             DialogueManager.instance.EnterDialogueMode(inkJSONArray[0]);
         }
     }
@@ -34,11 +48,17 @@ public class DialogueTrigger : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !PauseMenuManager.isPaused)
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
-            if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(actualPos, 2) && !DialogueManager.instance.dialogueIsPlaying)
+            foreach (Vector2 pos in actualPositions)
             {
-                Debug.Log("Dialogue Triggered");
-                EnterDialogue();
+                Debug.Log(pos);
+                Debug.Log(MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2));
+                if ((MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(pos, 2)) && !DialogueManager.instance.dialogueIsPlaying)
+                {
+                    Debug.Log("Dialogue Triggered");
+                    EnterDialogue();
+                }
             }
+            
         }
     }
 

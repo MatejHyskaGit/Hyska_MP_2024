@@ -27,6 +27,18 @@ public class PauseMenuManager : MonoBehaviour
 
     bool insideVolume;
 
+    [Header("Inventory Screen")]
+    [SerializeField] GameObject InventoryPanel;
+    [SerializeField] Animator inventoryAnimator;
+    [SerializeField] GameObject itemContainer;
+
+    int leftFrom = 0;
+    bool insideInventory = false;
+    bool klicky = false;
+
+
+    [Header("Global")]
+    [SerializeField] Image Background;
 
     public static bool isPaused { get; private set; }
 
@@ -36,9 +48,11 @@ public class PauseMenuManager : MonoBehaviour
 
     bool runCustomUpdate = false;
     bool optionsUpdate = false;
+    bool inventoryUpdate = false;
 
     void Start()
     {
+        InventoryPanel.SetActive(false);
         SettingsPanel.SetActive(false);
         PauseCanvas.SetActive(false);
 
@@ -65,6 +79,7 @@ public class PauseMenuManager : MonoBehaviour
         if (runCustomUpdate)
         {
             if (optionsUpdate) OptionsLoop();
+            else if (inventoryUpdate) InventoryLoop();
             return;
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -110,7 +125,7 @@ public class PauseMenuManager : MonoBehaviour
                 switch (selectedIndex)
                 {
                     case 0: Resume(); break;
-                    case 1: break;
+                    case 1: Inventory(); break;
                     case 2: break;
                     case 3: Options(); break;
                     case 4: MainMenu(); break;
@@ -152,6 +167,144 @@ public class PauseMenuManager : MonoBehaviour
 
         selectedInnerIndex = 0;
         settingsAnimator.Play(selectedInnerIndex.ToString());
+    }
+
+    void Inventory()
+    {
+        PausePanel.SetActive(false);
+        InventoryPanel.SetActive(true);
+
+        runCustomUpdate = true;
+        inventoryUpdate = true;
+
+        InventoryManager.Instance.UpdateList();
+
+        selectedInnerIndex = 0;
+        inventoryAnimator.Play(selectedInnerIndex.ToString());
+
+    }
+
+    void InventoryLoop()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            if (insideInventory)
+            {
+                selectedInnerIndex = 0;
+                InventoryManager.Instance.Close();
+                insideInventory = false;
+                return;
+            }
+            else if (!insideInventory) 
+            {
+                selectedInnerIndex = 0;
+                klicky = false;
+                itemContainer.SetActive(true);
+                InventoryPanel.SetActive(false);
+                PausePanel.SetActive(true);
+                runCustomUpdate = false;
+                inventoryUpdate = false;
+                pauseAnimator.Play(selectedIndex.ToString());
+                return;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (insideInventory)
+            {
+                InventoryManager.Instance.Close();
+                insideInventory = false;
+                return;
+            }
+        }
+        if (!insideInventory)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                if (selectedInnerIndex != 6)
+                {
+                    if (InventoryManager.Instance.ItemList.Count >= selectedInnerIndex + 1)
+                    {
+                        if (InventoryManager.Instance.ItemList[selectedInnerIndex] != null)
+                        {
+                            insideInventory = true; 
+                            InventoryManager.Instance.OpenItem(InventoryManager.Instance.ItemList[selectedInnerIndex].Name);
+                        }
+                        return;
+                    }
+                }
+                else if (!klicky)
+                {
+                    //druhý inventář - klíče
+                    klicky = true;
+                    inventoryAnimator.Play("klicky_pause");
+                    itemContainer.SetActive(false);
+                }
+                else if (klicky)
+                {
+                    klicky = false;
+                    inventoryAnimator.Play("6");
+                    itemContainer.SetActive(true);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if (klicky) return;
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 1 || selectedInnerIndex == 2)
+                {
+                    selectedInnerIndex += 3;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+                else if (selectedInnerIndex == 6)
+                {
+                    leftFrom = 5;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                if (klicky) return;
+                if (selectedInnerIndex == 3 || selectedInnerIndex == 4 || selectedInnerIndex == 5)
+                {
+                    selectedInnerIndex -= 3;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+                else if (selectedInnerIndex == 6)
+                {
+                    leftFrom = 2;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (klicky) return;
+                if (selectedInnerIndex == 1 || selectedInnerIndex == 2 || selectedInnerIndex == 4 || selectedInnerIndex == 5)
+                {
+                    selectedInnerIndex--;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+                else if (selectedInnerIndex == 6)
+                {
+                    selectedInnerIndex = leftFrom;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (klicky) return;
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 3 || selectedInnerIndex == 1 || selectedInnerIndex == 4)
+                {
+                    selectedInnerIndex++;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+                else if (selectedInnerIndex == 2 || selectedInnerIndex == 5)
+                {
+                    leftFrom = selectedInnerIndex;
+                    selectedInnerIndex = 6;
+                    inventoryAnimator.Play(selectedInnerIndex.ToString());
+                }
+            }
+        }
+        
     }
 
     void OptionsLoop()
@@ -256,6 +409,7 @@ public class PauseMenuManager : MonoBehaviour
                 PausePanel.SetActive(true);
                 runCustomUpdate = false;
                 optionsUpdate = false;
+                pauseAnimator.Play(selectedIndex.ToString());
                 return;
             }
         }

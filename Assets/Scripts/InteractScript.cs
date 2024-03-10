@@ -9,7 +9,7 @@ public class InteractScript : MonoBehaviour
     void Start()
     {
         Interactables = GameObject.FindGameObjectsWithTag("Interactable");
-        Debug.Log(Interactables);
+        //Debug.Log(Interactables);
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class InteractScript : MonoBehaviour
                 // Debug.Log(MovementManager.instance.VectRound((Vector2)inter.transform.position, 2));
                 if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound((Vector2)inter.transform.position, 2))
                 {
-                    Debug.Log("Hey, you interacted with me!!");
+                    //Debug.Log("Hey, you interacted with me!!");
                     WhenInteracted interacted = inter.GetComponent<WhenInteracted>();
 
                     interacted.Interact(inter.name);

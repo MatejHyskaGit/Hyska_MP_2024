@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -23,6 +26,14 @@ public class GameManager : MonoBehaviour
 
     public int Volume;
 
+    public List<Item> ItemListGM { get; set; } = new List<Item> { };
+
+    public bool InitDialogue { get; set; }
+
+    [SerializeField] private Animator ItemGetAnimator;
+
+    [SerializeField] private Image ItemGetImage;
+
 
     void Awake()
     {
@@ -38,6 +49,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        ItemListGM = new List<Item> { };
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -45,6 +57,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
         Volume = 5;
+        
+        
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -81,5 +95,28 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
         transition.SetTrigger("End");
+    }
+
+    public void AddItem(Item item)
+    {
+        ItemListGM.Add(item);
+        ItemGetImage.sprite = item.Icon;
+        ItemGetAnimator.Play("GetItem");
+    }
+    public void RemoveItem(Item item)
+    {
+        int removedindex = ItemListGM.IndexOf(item);
+        ItemListGM.Remove(item);
+        MoveAll(removedindex);
+
+    }
+    private void MoveAll(int index)
+    {
+        if (ItemListGM[index + 1] == null) return;
+        else
+        {
+            ItemListGM[index] = ItemListGM[index + 1];
+            MoveAll(index + 1);
+        }
     }
 }
