@@ -114,8 +114,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 115
-        y: 70
-        width: 472
+        y: 72
+        width: 485
         height: 330
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bdcaa8c5a8b7b14fa0861b633832cc1
-      internalID: -728211374
+      spriteID: 51aacb837c8e0e84b8c59619382fac8e
+      internalID: 2055830482
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 618
-        y: 40
+        y: 42
         width: 282
         height: 450
       alignment: 0
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d81f732972d076245b7b298eebdbf300
-      internalID: 622144921
+      spriteID: 6652a19ab7454d546ae1f256f339b0e6
+      internalID: 107603892
       vertices: []
       indices: 
       edges: []
@@ -162,8 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MALIR_3: 622144921
-      MALIR_4: -728211374
+      MALIR_3: 107603892
+      MALIR_4: 2055830482
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

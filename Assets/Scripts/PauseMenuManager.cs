@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -14,6 +16,20 @@ public class PauseMenuManager : MonoBehaviour
 
     [SerializeField] Animator pauseAnimator;
 
+    [Header("Save Screen")]
+    [SerializeField] GameObject SavePanel;
+    [SerializeField] private GameObject[] saveFilesObjects;
+    private Image[] saveFileImages;
+    [SerializeField] private Sprite[] coloredSaveSprites;
+    [SerializeField] private GameObject saveFilePart;
+    [SerializeField] private GameObject yesNoPart;
+    private Animator saveFileAnimator;
+    private Animator yesNoAnimator;
+    [SerializeField] private GameObject newGameTextObject;
+
+    bool selectedFile = false;
+    int selectedFileNum = 0;
+
     [Header("Options Screen")]
 
     [SerializeField] GameObject SettingsPanel;
@@ -25,20 +41,16 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Sprite switchSpriteOn;
     [SerializeField] private Sprite switchSpriteOff;
 
-    bool insideVolume;
-
     [Header("Inventory Screen")]
     [SerializeField] GameObject InventoryPanel;
     [SerializeField] Animator inventoryAnimator;
     [SerializeField] GameObject itemContainer;
+    [SerializeField] Image itemImage;
 
     int leftFrom = 0;
     bool insideInventory = false;
     bool klicky = false;
 
-
-    [Header("Global")]
-    [SerializeField] Image Background;
 
     public static bool isPaused { get; private set; }
 
@@ -48,13 +60,40 @@ public class PauseMenuManager : MonoBehaviour
 
     bool runCustomUpdate = false;
     bool optionsUpdate = false;
+    bool saveUpdate = false;
     bool inventoryUpdate = false;
+
+    GameObject[] itemNeeders;
+
+    bool papirZoom = false;
 
     void Start()
     {
         InventoryPanel.SetActive(false);
         SettingsPanel.SetActive(false);
         PauseCanvas.SetActive(false);
+        SavePanel.SetActive(false);
+
+        saveFileAnimator = saveFilePart.GetComponent<Animator>();
+        yesNoAnimator = yesNoPart.GetComponent<Animator>();
+
+        saveFileImages = new Image[saveFilesObjects.Length];
+
+
+
+        int index = 0;
+        foreach (GameObject obj in saveFilesObjects)
+        {
+            saveFileImages[index] = obj.GetComponent<Image>();
+            if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[index])))
+            {
+                saveFileImages[index].sprite = coloredSaveSprites[index];
+                //TimePlayedTexts[index].text = "08:51:12";
+            }
+
+            index++;
+        }
+
 
         foreach (Image soundimage in optionsSoundImages)
         {
@@ -72,6 +111,8 @@ public class PauseMenuManager : MonoBehaviour
         {
             VsyncImageSwitch.sprite = switchSpriteOn;
         }
+        itemNeeders = new GameObject[0];
+        itemNeeders = GameObject.FindGameObjectsWithTag("NeedItem");
     }
 
     void Update()
@@ -79,6 +120,7 @@ public class PauseMenuManager : MonoBehaviour
         if (runCustomUpdate)
         {
             if (optionsUpdate) OptionsLoop();
+            else if (saveUpdate) SaveGameLoop();
             else if (inventoryUpdate) InventoryLoop();
             return;
         }
@@ -126,7 +168,7 @@ public class PauseMenuManager : MonoBehaviour
                 {
                     case 0: Resume(); break;
                     case 1: Inventory(); break;
-                    case 2: break;
+                    case 2: Save(); break;
                     case 3: Options(); break;
                     case 4: MainMenu(); break;
                     default: return;
@@ -138,11 +180,14 @@ public class PauseMenuManager : MonoBehaviour
 
     void Pause()
     {
-        PauseCanvas.SetActive(true);
-        isPaused = true;
-        Time.timeScale = 0f;
-        selectedIndex = 0;
-        pauseAnimator.Play(selectedIndex.ToString());
+        if (!GameManager.instance.loading && !DialogueManager.instance.dialogueIsPlaying)
+        {
+            PauseCanvas.SetActive(true);
+            isPaused = true;
+            Time.timeScale = 0f;
+            selectedIndex = 0;
+            pauseAnimator.Play(selectedIndex.ToString());
+        }
     }
 
     void Resume()
@@ -154,13 +199,26 @@ public class PauseMenuManager : MonoBehaviour
 
     void Save()
     {
-        throw new NotImplementedException();
+        PausePanel.SetActive(false);
+        SavePanel.SetActive(true);
+        yesNoPart.SetActive(false);
+        saveFilePart.SetActive(true);
+
+        selectedFile = false;
+        selectedFileNum = 0;
+
+        runCustomUpdate = true;
+        saveUpdate = true;
+
+        selectedInnerIndex = 0;
+        saveFileAnimator.Play(selectedInnerIndex.ToString());
     }
 
     void Options()
     {
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(true);
+
 
         runCustomUpdate = true;
         optionsUpdate = true;
@@ -184,9 +242,157 @@ public class PauseMenuManager : MonoBehaviour
 
     }
 
+    void SaveGameLoop()
+    {
+        if (!selectedFile) //4 obrázky s výběrem save filu
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SavePanel.SetActive(false);
+                PausePanel.SetActive(true);
+                selectedFile = false;
+                selectedFileNum = 0;
+                runCustomUpdate = false;
+                saveUpdate = false;
+                pauseAnimator.Play(selectedIndex.ToString());
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                if (selectedInnerIndex == 4)
+                {
+                    SavePanel.SetActive(false);
+                    PausePanel.SetActive(true);
+                    selectedFile = false;
+                    selectedFileNum = 0;
+                    runCustomUpdate = false;
+                    saveUpdate = false;
+                    pauseAnimator.Play(selectedIndex.ToString());
+                    return;
+                }
+                yesNoPart.SetActive(true);
+                if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[selectedInnerIndex])))
+                {
+                    newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Přepsat hru?";
+                }
+                else
+                {
+                    newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Uložit hru?";
+                }
+                saveFilePart.SetActive(false);
+                selectedFile = true;
+                selectedFileNum = selectedInnerIndex + 1;
+                selectedInnerIndex = 0;
+                yesNoAnimator.Play(selectedInnerIndex.ToString());
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 1)
+                {
+                    selectedInnerIndex += 2;
+                }
+                else if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
+                {
+                    leftFrom = selectedInnerIndex;
+                    selectedInnerIndex = 4;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
+                {
+                    selectedInnerIndex -= 2;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    selectedInnerIndex = leftFrom;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 2)
+                {
+                    selectedInnerIndex++;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    leftFrom = 3;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (selectedInnerIndex == 1 || selectedInnerIndex == 3)
+                {
+                    selectedInnerIndex--;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    leftFrom = 2;
+                }
+            }
+            saveFileAnimator.Play(selectedInnerIndex.ToString());
+            return;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                switch (selectedInnerIndex)
+                {
+                    case 0:
+                        Debug.Log("Saving game on file " + selectedFileNum.ToString());
+                        DataPersistenceManager.Instance.SaveGame($"data{selectedFileNum}.game");
+
+                        saveFilePart.SetActive(false);
+                        yesNoPart.SetActive(false);
+                        PausePanel.SetActive(true);
+                        SavePanel.SetActive(false);
+                        selectedFile = false;
+                        selectedFileNum = 0;
+                        runCustomUpdate = false;
+                        saveUpdate = false;
+                        pauseAnimator.Play(selectedIndex.ToString());
+                        break;
+                    case 1:
+                        Debug.Log("no in confirmation");
+                        saveFilePart.SetActive(true);
+                        yesNoPart.SetActive(false);
+                        selectedFile = false;
+                        selectedInnerIndex = selectedFileNum - 1;
+                        saveFileAnimator.Play(selectedInnerIndex.ToString());
+                        selectedFileNum = 0;
+                        return;
+                    default: break;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                saveFilePart.SetActive(true);
+                yesNoPart.SetActive(false);
+                selectedFile = false;
+                selectedInnerIndex = selectedFileNum - 1;
+                saveFileAnimator.Play(selectedInnerIndex.ToString());
+                selectedFileNum = 0;
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (selectedInnerIndex == 1) selectedInnerIndex--;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (selectedInnerIndex == 0) selectedInnerIndex++;
+            }
+            yesNoAnimator.Play(selectedInnerIndex.ToString());
+            return;
+        }
+    }
+
     void InventoryLoop()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             if (insideInventory)
             {
                 selectedInnerIndex = 0;
@@ -194,7 +400,7 @@ public class PauseMenuManager : MonoBehaviour
                 insideInventory = false;
                 return;
             }
-            else if (!insideInventory) 
+            else if (!insideInventory)
             {
                 selectedInnerIndex = 0;
                 klicky = false;
@@ -211,8 +417,64 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (insideInventory)
             {
-                InventoryManager.Instance.Close();
-                insideInventory = false;
+                if (InventoryManager.Instance.ItemList[selectedInnerIndex].Name == "Papír" && !papirZoom)
+                {
+                    //zoomnout na papír
+
+                    //load sprite
+                    Sprite bigPaper = Resources.Load<Sprite>("Sprites/velkypapir");
+
+                    //make image big
+                    itemImage.rectTransform.sizeDelta = new Vector2(711, 300);
+
+                    //set sprite
+                    itemImage.sprite = bigPaper;
+                    papirZoom = true;
+                }
+                else if (InventoryManager.Instance.ItemList[selectedInnerIndex].Name == "Papír" && papirZoom)
+                {
+                    //odzoomnout
+                    itemImage.rectTransform.sizeDelta = new Vector2(300, 300);
+                    InventoryManager.Instance.Close();
+                    insideInventory = false;
+                    papirZoom = false;
+                }
+                else
+                {
+                    itemImage.rectTransform.sizeDelta = new Vector2(300, 300);
+                    InventoryManager.Instance.Close();
+                    insideInventory = false;
+                    klicky = false;
+                    itemContainer.SetActive(true);
+                    InventoryPanel.SetActive(false);
+                    PausePanel.SetActive(true);
+                    runCustomUpdate = false;
+                    inventoryUpdate = false;
+                    Resume();
+                    foreach (GameObject obj in itemNeeders)
+                    {
+                        Debug.Log("Starting foreach");
+                        BoxCollider2D[] bcolliders = obj.GetComponentsInChildren<BoxCollider2D>();
+                        Vector2[] actualPositions = new Vector2[bcolliders.Length];
+                        int index = 0;
+                        foreach (var collider in bcolliders)
+                        {
+                            actualPositions[index] = (Vector2)obj.transform.position + collider.offset;
+                            index++;
+                        }
+                        foreach (Vector2 pos in actualPositions)
+                        {
+                            if (MovementManager.instance.VectRound(MovementManager.instance.actualPos + InteractScript.DirToVect(MovementManager.instance.Direction), 2) == MovementManager.instance.VectRound(pos, 2))
+                            {
+                                Debug.Log("Found the position");
+                                obj.GetComponentInChildren<ItemNeedScript>().UseItem(InventoryManager.Instance.ItemList[selectedInnerIndex], obj);
+                                Destroy(obj.GetComponent<ItemNeedScript>());
+                            }
+                        }
+                    }
+                    selectedInnerIndex = 0;
+                }
+
                 return;
             }
         }
@@ -226,7 +488,7 @@ public class PauseMenuManager : MonoBehaviour
                     {
                         if (InventoryManager.Instance.ItemList[selectedInnerIndex] != null)
                         {
-                            insideInventory = true; 
+                            insideInventory = true;
                             InventoryManager.Instance.OpenItem(InventoryManager.Instance.ItemList[selectedInnerIndex].Name);
                         }
                         return;
@@ -304,32 +566,24 @@ public class PauseMenuManager : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     void OptionsLoop()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            if (!insideVolume)
-            {
-                if (selectedInnerIndex != 2) selectedInnerIndex++;
-                settingsAnimator.Play(selectedInnerIndex.ToString());
-            }
+            if (selectedInnerIndex != 2) selectedInnerIndex++;
+            settingsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-
-            if (!insideVolume)
-            {
-                if (selectedInnerIndex != 0) selectedInnerIndex--;
-                settingsAnimator.Play(selectedInnerIndex.ToString());
-            }
-
+            if (selectedInnerIndex != 0) selectedInnerIndex--;
+            settingsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            if (insideVolume)
+            if (selectedInnerIndex == 0)
             {
                 if (GameManager.instance.Volume != 0) GameManager.instance.Volume--;
                 foreach (Image soundimage in optionsSoundImages)
@@ -344,7 +598,7 @@ public class PauseMenuManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            if (insideVolume)
+            if (selectedInnerIndex == 0)
             {
                 if (GameManager.instance.Volume != 10) GameManager.instance.Volume++;
                 foreach (Image soundimage in optionsSoundImages)
@@ -359,19 +613,10 @@ public class PauseMenuManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            if (insideVolume)
-            {
-                settingsAnimator.speed = 1f;
-                insideVolume = false;
-                return;
-            }
-
 
             switch (selectedInnerIndex)
             {
                 case 0:
-                    insideVolume = true;
-                    settingsAnimator.speed = 0f;
                     break;
                 case 1:
                     if (VsyncImageSwitch.sprite == switchSpriteOff)
@@ -397,21 +642,12 @@ public class PauseMenuManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (insideVolume)
-            {
-                settingsAnimator.speed = 1f;
-                insideVolume = false;
-                return;
-            }
-            else
-            {
-                SettingsPanel.SetActive(false);
-                PausePanel.SetActive(true);
-                runCustomUpdate = false;
-                optionsUpdate = false;
-                pauseAnimator.Play(selectedIndex.ToString());
-                return;
-            }
+            SettingsPanel.SetActive(false);
+            PausePanel.SetActive(true);
+            runCustomUpdate = false;
+            optionsUpdate = false;
+            pauseAnimator.Play(selectedIndex.ToString());
+            return;
         }
     }
 

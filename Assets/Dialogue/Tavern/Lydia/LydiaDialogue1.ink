@@ -10,18 +10,15 @@ No, když budeš cokoliv potřebovat, neváhej se na mě obrátit, najdeš mě b
 === questions ===
 Máš nějaké otázky?
 +[Nevíš, kde jsem se tu vzala?]
-    Nevíš, kde jsem se tu vzala?#speaker:Rynn #portrait:rynn_neutral
     O tom my tady nemluvíme, ale neboj, jsi tu naprosto v bezpečí- nebo skoro. #speaker:Lydia #portrait:lydia_neutral
     Ale klid, za chvíli si zvykneš, nakonec se ti tu bude líbit, ostatně jako nám všem. 
     ->continue
 +[Co je tohle za místo?]
-    Co je tohle za místo?#speaker:Rynn #portrait:rynn_neutral
     Nechápu jakto, že se tě nikdo neujal a neřekl ti to, ty polena v poslední době vůbec nedělají svojí práci. #speaker:Lydia #portrait:lydia_neutral
     Vítej v Ataraxii, to je tahle malá vesnice, znamená to poklidný, nebo bezstarostný, jsem si tím jistá, četla jsem to!
     A celé tohle místo je Elvië, netuším jak je velká, nebo kolik měst tu vlastně je, ale kdo by to zjišťoval, tady už na tom nesejde.  
     ->continue
 +[Pověz mi něco o lidech tady]
-    Pověz mi něco o lidech tady. #speaker:Rynn #portrait:rynn_neutral
     Hlavně z nikoho neměj strach, někdo se možná snaží tvářit drsně, ale všichni jsou neškodní, snažíme se tu tahat za jeden provaz. #speaker:Lydia #portrait:lydia_neutral
     Ostatně, hádky by tady k ničemu nevedly.
     Třeba tady Arthur, nikdy jsem ho neviděla rozhozeného, skvěle vypráví příběhy a vždycky ví, co se kde děje, každý ho tu má rád.

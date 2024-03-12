@@ -5,14 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class CrossFadeLoadScript : MonoBehaviour
 {
+
+    public static void SceneUpdate()
+    {
+        if (SceneManager.GetActiveScene().name == "MalirRoom3" && GameManager.instance.lastSceneName == "MalirRoom2")
+        {
+            SchuteFallManager.instance.CameraVC.Follow = null;
+        }
+        if (SceneManager.GetActiveScene().name == "MalirRoom3" && GameManager.instance.lastSceneName == "MalirRoom4")
+        {
+            SchuteFallManager.instance.CameraVC.Follow = SchuteFallManager.instance.PlayerObject.transform;
+        }
+    }
     public void SetLoadTrue()
     {
         GameManager.instance.loading = true;
+
     }
     public void SetLoadFalse()
     {
         GameManager.instance.loading = false;
-        if (SceneManager.GetActiveScene().name == "MalirRoom3")
+        if (SceneManager.GetActiveScene().name == "MalirRoom3" && GameManager.instance.lastSceneName == "MalirRoom2")
         {
             GameManager.instance.loading = true;
             SchuteFallManager.instance.StartChute();

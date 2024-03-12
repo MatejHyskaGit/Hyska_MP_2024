@@ -1,4 +1,6 @@
 EXTERNAL getFlowerSack()
+EXTERNAL loseHeart()
+~loseHeart()
 Škoda, třeba to příště vyjde líp. #layout:left #portrait:anthony_neutral #speaker:Anthony
 Hele když už tě tu mám, můžeš pro mě něco udělat? #layout:left #portrait:anthony_neutral #speaker:Anthony
 Tenhle malíř, Francis, bydlí hned tady za rohem, už tři dlouhý tejdny nevytáhl paty z domu.

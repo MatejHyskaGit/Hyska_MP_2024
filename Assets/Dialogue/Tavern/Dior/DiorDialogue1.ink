@@ -1,5 +1,5 @@
 Nemůžu uvěřit, že se tu ukázal! #layout:left #speaker:Dior #portrait:dior_neutral
-Bylo to snad dvě stě let! #speaker:Kazuha #portrait:kazuha_neutral
+Bylo to snad dvě stě let! #speaker:Charlie #portrait:charlie_neutral
 Měl by se zase sebrat a- #speaker:Dior #portrait:dior_neutral
 
 Ahoj? Potřebuješ něco? Vypadáš zmateně...

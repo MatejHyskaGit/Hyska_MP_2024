@@ -15,7 +15,7 @@ public class InteractScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !PauseMenuManager.isPaused)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !PauseMenuManager.isPaused && !DialogueManager.instance.dialogueIsPlaying)
         {
             if (DiceGameManager.instance != null) if (DiceGameManager.instance.DiceGameOn) return;
             foreach (var inter in Interactables)
@@ -36,7 +36,7 @@ public class InteractScript : MonoBehaviour
         }
     }
 
-    private Vector2 DirToVect(Direction direction)
+    public static Vector2 DirToVect(Direction direction)
     {
         Debug.Log(direction);
         switch (direction)

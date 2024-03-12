@@ -47,6 +47,16 @@ MonoBehaviour:
   PauseCanvas: {fileID: 0}
   PausePanel: {fileID: 0}
   pauseAnimator: {fileID: 0}
+  SavePanel: {fileID: 0}
+  saveFilesObjects: []
+  coloredSaveSprites:
+  - {fileID: -960803784, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}
+  - {fileID: 1674774110, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}
+  - {fileID: 779413563, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}
+  - {fileID: 1301927794, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}
+  saveFilePart: {fileID: 0}
+  yesNoPart: {fileID: 0}
+  newGameTextObject: {fileID: 0}
   SettingsPanel: {fileID: 0}
   settingsAnimator: {fileID: 0}
   optionsSoundImages:
@@ -65,3 +75,7 @@ MonoBehaviour:
   volumeSpriteOff: {fileID: -1138192362, guid: 65e05f99367bd234590d022af7f062e2, type: 3}
   switchSpriteOn: {fileID: -1896948713, guid: 49803ccd3344ddb4a9a0d7055da09b8a, type: 3}
   switchSpriteOff: {fileID: 1516640588, guid: 49803ccd3344ddb4a9a0d7055da09b8a, type: 3}
+  InventoryPanel: {fileID: 0}
+  inventoryAnimator: {fileID: 0}
+  itemContainer: {fileID: 0}
+  itemImage: {fileID: 0}

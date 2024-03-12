@@ -6,7 +6,7 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEditor.Rendering;
 
-public class MovementManager : MonoBehaviour
+public class MovementManager : MonoBehaviour, IDataPersistence
 {
     [SerializeField]
     private Tilemap groundTilemap;
@@ -164,7 +164,7 @@ public class MovementManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         foreach (var spawnPoint in SpawnPoints)
         {
-            if(scene.name == "Tavern")
+            if (scene.name == "Tavern")
             {
                 if (lastSceneName == "MalirRoom1")
                 {
@@ -211,9 +211,9 @@ public class MovementManager : MonoBehaviour
                     }
                 }
             }
-            if(scene.name == "MalirRoom4")
+            if (scene.name == "MalirRoom3")
             {
-                if(lastSceneName == "MalirRoom3")
+                if (lastSceneName == "MalirRoom4")
                 {
                     if (GameManager.instance.pos == "up")
                     {
@@ -230,7 +230,27 @@ public class MovementManager : MonoBehaviour
                         }
                     }
                 }
-                else if(lastSceneName == "MalirRoom5")
+            }
+            if (scene.name == "MalirRoom4")
+            {
+                if (lastSceneName == "MalirRoom3")
+                {
+                    if (GameManager.instance.pos == "up")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                    else if (GameManager.instance.pos == "down")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1d")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                }
+                else if (lastSceneName == "MalirRoom5")
                 {
                     if (spawnPoint.name == "SpawnPoint2")
                     {
@@ -239,6 +259,21 @@ public class MovementManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        Debug.Log("Loading data:" + data.playerPosition);
+        Vector3 playerpos = new Vector3(data.playerPosition.x, data.playerPosition.y, data.playerPosition.z);
+        this.transform.position = playerpos;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+
+        Vector3 playerpos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Debug.Log("Saving data:" + playerpos);
+        data.playerPosition = playerpos;
     }
 }
 

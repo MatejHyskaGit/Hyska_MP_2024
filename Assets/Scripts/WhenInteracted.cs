@@ -11,7 +11,32 @@ public class WhenInteracted : MonoBehaviour
 
         if (scene.name == "Tavern")
         {
-            if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom1");
+            if (name == "DoorToNext")
+            {
+                if (RoomInitializer.instance.CanExitTavern())
+                {
+                    if (GameManager.instance.NathanielGone)
+                    {
+                        GameManager.instance.LoadScene("MalirRoom1");
+                    }
+                    else
+                    {
+                        AnimationDialogue.Instance.TavernAnimationOne();
+                    }
+                    //start animation
+                }
+                else
+                {
+                    TextAsset noexitdialogue = Resources.Load<TextAsset>("Dialogues/NoTavernExit");
+                    DialogueManager.instance.EnterDialogueMode(noexitdialogue);
+                }
+            }
+
+        }
+        if (scene.name == "MalirRoom5")
+        {
+            if (name == "DoorToNext" || name == "DoorToNext1") GameManager.instance.LoadScene("MalirRoom6");
+            if (name == "DoorBack" || name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom4");
         }
     }
 }

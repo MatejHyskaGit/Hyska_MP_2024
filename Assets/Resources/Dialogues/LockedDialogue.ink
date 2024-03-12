@@ -1,0 +1,1 @@
+Dveře jsou zamčené... #layout:rightBlank

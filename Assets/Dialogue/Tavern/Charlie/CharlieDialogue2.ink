@@ -1,1 +1,1 @@
-Věděla jsem, že máš ráda štěňátka #speaker:Kazuha #portrait:kazuha_neutral #layout:left
+Věděla jsem, že máš ráda štěňátka. #speaker:Charlie #portrait:charlie_neutral #layout:left

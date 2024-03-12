@@ -1,0 +1,6 @@
+Víš co dělá panda když nemá dost místa? #layout:left #speaker:Maty #portrait:maty_neutral
+...
+Expanduje..
+haha lol
+...
+Mimochodem nezapomeň hodně ukládat.

@@ -8,14 +8,14 @@ public class InkExternalFunctions
 {
     public void Bind(Story story, GameObject obj)
     {
-        if(obj.name == "DiePopup")
+        if (obj.name == "DiePopup")
         {
             story.BindExternalFunction("startDice", () =>
             {
                 obj.SetActive(true);
             });
         }
-        if(obj.name == "StatueLeft")
+        if (obj.name == "StatueLeft")
         {
             story.BindExternalFunction("turnLeftLeft", () =>
             {
@@ -32,7 +32,7 @@ public class InkExternalFunctions
                 {
                     obj.GetComponentInChildren<SpriteRenderer>().sprite = leftsprite;
                 }
-                if(spriteren.sprite.name.Equals(rightsprite.name) || spriteren.sprite.name.Equals(rightSprite_dir.name))
+                if (spriteren.sprite.name.Equals(rightsprite.name) || spriteren.sprite.name.Equals(rightSprite_dir.name))
                 {
                     obj.GetComponentInChildren<SpriteRenderer>().sprite = midsprite;
                 }
@@ -144,17 +144,63 @@ public class InkExternalFunctions
                 }
             });
         }
-        if(obj.name == "NPCAnthony")
+        if (obj.name == "NPCAnthony")
         {
             story.BindExternalFunction("getFlowerSack", () =>
             {
-                Sprite sprite = Resources.Load<Sprite>("Sprites/sacek"); 
-                Item item = new Item { Name = "S��ek s kv�tinama", Icon = sprite, Description = "Tohle mus�m don�st mal��ovi" }; 
+                Sprite sprite = Resources.Load<Sprite>("Sprites/sacek");
+                Item item = new Item { Name = "Sáček s květinama", Icon = sprite, Description = "Tohle musím donést malíři" };
+                GameManager.instance.AddItem(item);
+            });
+            story.BindExternalFunction("getHeart", () =>
+            {
+                GameManager.instance.GetHeart();
+            });
+            story.BindExternalFunction("loseHeart", () =>
+            {
+                GameManager.instance.LoseHeart();
+            });
+        }
+        if (obj.name == "BoxWing")
+        {
+            story.BindExternalFunction("getWing", () =>
+            {
+                Sprite[] sprite = Resources.LoadAll<Sprite>("Sprites/smrtacek_1");
+                Item item = new Item { Name = "Opracovaný kámen", Icon = sprite[1], Description = "Opracovaný kus kamene, trochu připomíná křídlo" };
                 GameManager.instance.AddItem(item);
             });
         }
+        if (obj.name == "BoxRat")
+        {
+            story.BindExternalFunction("takeRatDamage", () =>
+            {
+                GameManager.instance.LoseHeart();
+            });
+        }
+        if (obj.name == "BoxPaper")
+        {
+            story.BindExternalFunction("getPaper", () =>
+            {
+                Sprite sprite = Resources.Load<Sprite>("Sprites/papir");
+                Item item = new Item { Name = "Papír", Icon = sprite, Description = "Zvláštně pomalovaný papír" };
+                GameManager.instance.AddItem(item);
+            });
+        }
+        if (obj.name == "Nathaniel")
+        {
+            story.BindExternalFunction("tavernPlayNathanielAnim1", () =>
+            {
+                Animator nathAnimator = obj.GetComponent<Animator>();
+                nathAnimator.Play("TavernNathanielAnimation1");
+            });
+            story.BindExternalFunction("tavernPlayNathanielAnim2", () =>
+            {
+                Animator nathAnimator = obj.GetComponent<Animator>();
+                nathAnimator.Play("TavernNathanielAnimation2");
+            });
+        }
 
-
+        //bidnout a nastavit co dělá funknce pro start animace
     }
 
     public void Unbind(Story story)

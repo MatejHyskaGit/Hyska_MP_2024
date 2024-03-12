@@ -1,8 +1,10 @@
 EXTERNAL turnLeftLeft()
 EXTERNAL turnLeftRight()
 
-StatueLeft
+Socha. #layout:rightBlank
 +[Otočit vlevo]
     ~turnLeftLeft()
 +[Otočit vpravo]
     ~turnLeftRight()
++[Nechat být]
+    ->END

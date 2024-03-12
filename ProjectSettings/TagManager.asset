@@ -8,6 +8,7 @@ TagManager:
   - Trigger
   - Interactable
   - SpawnPoint
+  - NeedItem
   layers:
   - Default
   - TransparentFX

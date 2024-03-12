@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using TMPro;
 using Unity.VisualScripting;
@@ -43,7 +44,6 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Sprite switchSpriteOn;
     [SerializeField] private Sprite switchSpriteOff;
     [SerializeField] private Animator optionsAnimator;
-    bool insideVolume = false;
 
 
     int selectedInnerIndex = 0;
@@ -63,6 +63,7 @@ public class ButtonManager : MonoBehaviour
     private bool runCustomUpdate = false;
 
     private bool NewGameUpdate = false;
+    private bool LoadGameUpdate = false;
     private bool OptionsUpdate = false;
 
 
@@ -82,10 +83,10 @@ public class ButtonManager : MonoBehaviour
         foreach (GameObject obj in saveFilesObjects)
         {
             saveFileImages[index] = obj.GetComponent<Image>();
-            if (GameManager.instance.Saves[index])
+            if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[index])))
             {
                 saveFileImages[index].sprite = coloredSaveSprites[index];
-                TimePlayedTexts[index].text = "08:51:12";
+                //TimePlayedTexts[index].text = "08:51:12";
             }
             else
             {
@@ -143,6 +144,7 @@ public class ButtonManager : MonoBehaviour
             if (runCustomUpdate)
             {
                 if (NewGameUpdate) NewGameLoop();
+                else if (LoadGameUpdate) LoadGameLoop();
                 else if (OptionsUpdate) OptionsLoop();
             }
             else
@@ -168,14 +170,11 @@ public class ButtonManager : MonoBehaviour
                         switch (selectedIndex)
                         {
                             case 0: NewGame(); return;
-                            case 1: break;
+                            case 1: LoadGame(); break;
                             case 2: break;
                             case 3: Options(); break;
                             case 4: break;
-                            case 5:
-                                ChangeSide();
-                                break;
-
+                            case 5: ChangeSide(); break;
                             default: return;
                         }
                     }
@@ -205,6 +204,161 @@ public class ButtonManager : MonoBehaviour
         }
 
     }
+
+    void LoadGameLoop()
+    {
+        if (!selectedFile) //4 obrázky s výběrem save filu
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                rightAnimator.enabled = false;
+                rightAnimator.enabled = true;
+                saveFilePart.SetActive(false);
+                saveFilePart.SetActive(true);
+                rightAnimator.speed = 1f;
+                runCustomUpdate = false;
+                LoadGameUpdate = false;
+                selectedIndex = 0;
+                rightAnimator.Play(selectedIndex.ToString());
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                if (selectedInnerIndex == 4)
+                {
+                    rightAnimator.enabled = false;
+                    rightAnimator.enabled = true;
+                    saveFilePart.SetActive(false);
+                    saveFilePart.SetActive(true);
+                    rightAnimator.speed = 1f;
+                    runCustomUpdate = false;
+                    LoadGameUpdate = false;
+                    selectedIndex = 0;
+                    rightAnimator.Play(selectedIndex.ToString());
+                    return;
+                }
+                yesNoPart.SetActive(true);
+                if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[selectedInnerIndex])))
+                {
+                    newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Načíst hru?";
+                }
+                else
+                {
+                    newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Začít novou hru?";
+                }
+                saveFilePart.SetActive(false);
+                selectedFile = true;
+                selectedFileNum = selectedInnerIndex + 1;
+                selectedInnerIndex = 0;
+                yesNoAnimator.Play(selectedInnerIndex.ToString());
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 1)
+                {
+                    selectedInnerIndex += 2;
+                }
+                else if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
+                {
+                    leftFrom = selectedInnerIndex;
+                    selectedInnerIndex = 4;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
+                {
+                    selectedInnerIndex -= 2;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    selectedInnerIndex = leftFrom;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (selectedInnerIndex == 0 || selectedInnerIndex == 2)
+                {
+                    selectedInnerIndex++;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    leftFrom = 3;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (selectedInnerIndex == 1 || selectedInnerIndex == 3)
+                {
+                    selectedInnerIndex--;
+                }
+                else if (selectedInnerIndex == 4)
+                {
+                    leftFrom = 2;
+                }
+            }
+            saveFileAnimator.Play(selectedInnerIndex.ToString());
+            return;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                switch (selectedInnerIndex)
+                {
+                    case 0:
+                        Debug.Log("Loading game on file " + selectedFileNum.ToString());
+                        DataPersistenceManager.Instance.LoadGame($"data{selectedFileNum}.game");
+                        //DataPersistenceManager.Instance.LoadGame($"data{selectedFileNum}.game");
+                        GameManager.instance.LoadScene(GameManager.instance.loadedScene);
+                        break;
+                    case 1:
+                        Debug.Log("no in confirmation");
+                        saveFilePart.SetActive(true);
+                        yesNoPart.SetActive(false);
+                        selectedFile = false;
+                        selectedInnerIndex = selectedFileNum - 1;
+                        saveFileAnimator.Play(selectedInnerIndex.ToString());
+                        selectedFileNum = 0;
+                        return;
+                    default: break;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                saveFilePart.SetActive(true);
+                yesNoPart.SetActive(false);
+                selectedFile = false;
+                selectedInnerIndex = selectedFileNum - 1;
+                saveFileAnimator.Play(selectedInnerIndex.ToString());
+                selectedFileNum = 0;
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (selectedInnerIndex == 1) selectedInnerIndex--;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (selectedInnerIndex == 0) selectedInnerIndex++;
+            }
+            yesNoAnimator.Play(selectedInnerIndex.ToString());
+            return;
+        }
+    }
+    void LoadGame()
+    {
+        rightAnimator.speed = 0f;
+
+        selectedInnerIndex = 0;
+        selectedFile = false;
+        selectedFileNum = 0;
+        saveFileAnimator.Play(selectedInnerIndex.ToString());
+        runCustomUpdate = true;
+        LoadGameUpdate = true;
+    }
+
 
     void NewGameLoop()
     {
@@ -239,7 +393,7 @@ public class ButtonManager : MonoBehaviour
                     return;
                 }
                 yesNoPart.SetActive(true);
-                if (GameManager.instance.Saves[selectedInnerIndex])
+                if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[selectedInnerIndex])))
                 {
                     newGameTextObject.GetComponent<TextMeshProUGUI>().text = "Přepsat stávající hru?";
                 }
@@ -310,6 +464,8 @@ public class ButtonManager : MonoBehaviour
                 {
                     case 0:
                         Debug.Log("Starting game on file " + selectedFileNum.ToString());
+                        DataPersistenceManager.Instance.NewGame($"data{selectedFileNum}.game");
+                        //DataPersistenceManager.Instance.LoadGame($"data{selectedFileNum}.game");
                         GameManager.instance.LoadScene("Tavern");
                         break;
                     case 1:
@@ -364,7 +520,6 @@ public class ButtonManager : MonoBehaviour
 
         selectedInnerIndex = 0;
         optionsAnimator.Play(selectedInnerIndex.ToString());
-        insideVolume = false;
 
         runCustomUpdate = true;
         OptionsUpdate = true;
@@ -374,25 +529,17 @@ public class ButtonManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            if (!insideVolume)
-            {
-                if (selectedInnerIndex != 2) selectedInnerIndex++;
-                optionsAnimator.Play(selectedInnerIndex.ToString());
-            }
+            if (selectedInnerIndex != 2) selectedInnerIndex++;
+            optionsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-
-            if (!insideVolume)
-            {
-                if (selectedInnerIndex != 0) selectedInnerIndex--;
-                optionsAnimator.Play(selectedInnerIndex.ToString());
-            }
-
+            if (selectedInnerIndex != 0) selectedInnerIndex--;
+            optionsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            if (insideVolume)
+            if (selectedInnerIndex == 0)
             {
                 if (GameManager.instance.Volume != 0) GameManager.instance.Volume--;
                 foreach (Image soundimage in optionsSoundImages)
@@ -407,7 +554,7 @@ public class ButtonManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            if (insideVolume)
+            if (selectedInnerIndex == 0)
             {
                 if (GameManager.instance.Volume != 10) GameManager.instance.Volume++;
                 foreach (Image soundimage in optionsSoundImages)
@@ -422,19 +569,11 @@ public class ButtonManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            if (insideVolume)
-            {
-                optionsAnimator.speed = 1f;
-                insideVolume = false;
-                return;
-            }
 
 
             switch (selectedInnerIndex)
             {
                 case 0:
-                    insideVolume = true;
-                    optionsAnimator.speed = 0f;
                     break;
                 case 1:
                     if (VsyncImageSwitch.sprite == switchSpriteOff)
@@ -459,20 +598,10 @@ public class ButtonManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (insideVolume)
-            {
-                optionsAnimator.speed = 1f;
-                insideVolume = false;
-                return;
-            }
-            else
-            {
-                rightAnimator.speed = 1f;
-                optionsAnimator.Play("default");
-                runCustomUpdate = false;
-                OptionsUpdate = false;
-                return;
-            }
+            rightAnimator.speed = 1f;
+            optionsAnimator.Play("default");
+            runCustomUpdate = false;
+            OptionsUpdate = false;
         }
 
     }

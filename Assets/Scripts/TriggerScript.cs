@@ -24,14 +24,36 @@ public class TriggerScript : MonoBehaviour
         }
         if (scene.name == "MalirRoom3")
         {
-            if (name == "DoorToNext" && !StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "up");
-            if (name == "DoorToNext1" && !StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "down");
+            if (name == "DoorToNext")
+            {
+                if (!StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "up");
+                else
+                {
+                    TextAsset lockedDialogue = Resources.Load<TextAsset>("Dialogues/LockedDialogue");
+                    DialogueManager.instance.EnterDialogueMode(lockedDialogue);
+                }
+            }
+
+            if (name == "DoorToNext1")
+            {
+                if (!StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "down");
+                else
+                {
+                    TextAsset lockedDialogue = Resources.Load<TextAsset>("Dialogues/LockedDialogue");
+                    DialogueManager.instance.EnterDialogueMode(lockedDialogue);
+                }
+            }
         }
         if (scene.name == "MalirRoom4")
         {
             if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom5");
             if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom3", "up");
             if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom3", "down");
+        }
+        if (scene.name == "MalirRoom5")
+        {
+            TextAsset dontFallDialogue = Resources.Load<TextAsset>("Dialogues/DontFallDialogue");
+            if (name == "trigger" || name == "trigger1") DialogueManager.instance.EnterDialogueMode(dontFallDialogue);
         }
 
         /*

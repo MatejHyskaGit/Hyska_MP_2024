@@ -1,0 +1,1 @@
+Socha. Vypadá, jako že jí něco chybí. #layout:rightBlank

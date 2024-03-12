@@ -144,7 +144,7 @@ public class DiceGameManager : MonoBehaviour
                 }
             }
 
-        }
+        }/*
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && !isPlaying)
         {
             if (selectedIndex != 0)
@@ -162,7 +162,7 @@ public class DiceGameManager : MonoBehaviour
                 choiceAnimator.Play(selectedIndex.ToString());
                 Debug.Log(selectedIndex);
             }
-        }
+        }*/
     }
 
 

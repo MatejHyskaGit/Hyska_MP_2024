@@ -58,12 +58,22 @@ public class DialogueManager : MonoBehaviour
 
     private InkExternalFunctions inkExternalFunctions;
 
+    [Header("Tavern")]
     [SerializeField] private GameObject diePopup;
     [SerializeField] private GameObject anthonyNPC;
+    [SerializeField] private GameObject Nathaniel;
 
+    [Header("MalirRoom1")]
+    [SerializeField] private GameObject boxWing;
+    [SerializeField] private GameObject boxRat;
+
+    [Header("MalirRoom3")]
     [SerializeField] private GameObject statueLeft;
     [SerializeField] private GameObject statueMid;
     [SerializeField] private GameObject statueRight;
+    [SerializeField] private GameObject boxPaper;
+
+
 
 
 
@@ -142,17 +152,28 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
-        if(SceneManager.GetActiveScene().name == "Tavern")
+        if (SceneManager.GetActiveScene().name == "Tavern")
         {
             inkExternalFunctions.Bind(currentStory, diePopup);
             inkExternalFunctions.Bind(currentStory, anthonyNPC);
+            inkExternalFunctions.Bind(currentStory, Nathaniel);
         }
-        if(SceneManager.GetActiveScene().name == "MalirRoom3")
+        if (SceneManager.GetActiveScene().name == "MalirRoom1")
+        {
+            inkExternalFunctions.Bind(currentStory, boxWing);
+            inkExternalFunctions.Bind(currentStory, boxRat);
+        }
+
+        if (SceneManager.GetActiveScene().name == "MalirRoom3")
         {
             inkExternalFunctions.Bind(currentStory, statueLeft);
             inkExternalFunctions.Bind(currentStory, statueMid);
             inkExternalFunctions.Bind(currentStory, statueRight);
+            inkExternalFunctions.Bind(currentStory, boxPaper);
         }
+
+
+
 
         displayNameText.text = "???";
         portraitAnimator.Play("default");
@@ -176,6 +197,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
+            if (GameManager.instance.gettingItem) return;
             submitSkip = false;
             //StartCoroutine(Wait());
             //Debug.Log("Can Continue");

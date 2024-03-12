@@ -1,4 +1,6 @@
 EXTERNAL getFlowerSack()
+EXTERNAL getHeart()
+~getHeart()
 Konečně někdo s kým je zábava hrát. #layout:left #portrait:anthony_neutral #speaker:Anthony
 No dobrá, sázka je sázka, tohle je teď tvoje. 
 Ale stejně si dávej pozor, ne že se hned vrhneš z okna jen proto, že můžeš... 

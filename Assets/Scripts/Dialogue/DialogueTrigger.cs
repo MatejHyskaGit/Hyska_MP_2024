@@ -58,19 +58,21 @@ public class DialogueTrigger : MonoBehaviour
                     EnterDialogue();
                 }
             }
-            
+
         }
     }
 
     public void EnterDialogue()
     {
+        if (GameManager.instance.loading) return;
+
         DialogueManager.instance.EnterDialogueMode(inkJSONArray[dialogueIndex]);
         if (inkJSONArray.Length > dialogueIndex + 1)
         {
             if (inkJSONArray[dialogueIndex + 1] != null) dialogueIndex++;
         }
+        GameManager.instance.WriteIndex(NpcObject.name, dialogueIndex);
     }
-
 
 
 

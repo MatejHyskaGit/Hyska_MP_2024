@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class SchuteFallManager : MonoBehaviour
 {
-    [SerializeField] CinemachineVirtualCamera CameraVC;
+    [SerializeField] public CinemachineVirtualCamera CameraVC;
     [SerializeField] Animator CameraAnimator;
-    [SerializeField] GameObject PlayerObject;
+    [SerializeField] public GameObject PlayerObject;
 
     public static SchuteFallManager instance;
 
@@ -19,7 +19,7 @@ public class SchuteFallManager : MonoBehaviour
 
     public void StartChute()
     {
-        if(GameManager.instance.lastSceneName == "MalirRoom4")
+        if (GameManager.instance.lastSceneName == "MalirRoom4")
         {
             SetFollowPlayer();
         }
