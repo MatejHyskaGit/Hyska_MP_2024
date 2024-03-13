@@ -75,7 +75,7 @@ public class PauseMenuManager : MonoBehaviour
         SavePanel.SetActive(false);
 
         saveFileAnimator = saveFilePart.GetComponent<Animator>();
-        yesNoAnimator = yesNoPart.GetComponent<Animator>();
+        yesNoAnimator = yesNoPart.GetComponentInChildren<Animator>();
 
         saveFileImages = new Image[saveFilesObjects.Length];
 
