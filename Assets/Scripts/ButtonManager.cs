@@ -46,9 +46,16 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Animator optionsAnimator;
 
 
+    [Header("Credits Block")]
+    [SerializeField] private GameObject creditsFirstScreen;
+    [SerializeField] private GameObject creditsSecondScreen;
+    [SerializeField] private GameObject creditsArrow;
+
     int selectedInnerIndex = 0;
     bool selectedFile = false;
     int selectedFileNum = 0;
+
+
 
 
 
@@ -65,6 +72,7 @@ public class ButtonManager : MonoBehaviour
     private bool NewGameUpdate = false;
     private bool LoadGameUpdate = false;
     private bool OptionsUpdate = false;
+    private bool CreditsUpdate = false;
 
 
     // Start is called before the first frame update
@@ -108,7 +116,8 @@ public class ButtonManager : MonoBehaviour
         {
             soundimage.sprite = volumeSpriteOff;
         }
-        for (int i = 0; i < GameManager.instance.Volume; i++)
+        Debug.Log((int)GameManager.instance.Volume * 10);
+        for (int i = 0; i < (int)GameManager.instance.Volume * 10; i++)
         {
             optionsSoundImages[i].sprite = volumeSpriteOn;
         }
@@ -131,6 +140,9 @@ public class ButtonManager : MonoBehaviour
             index++;
         }
 
+        creditsSecondScreen.SetActive(false);
+        creditsArrow.SetActive(false);
+
 
 
         selectedIndex = 0;
@@ -146,6 +158,7 @@ public class ButtonManager : MonoBehaviour
                 if (NewGameUpdate) NewGameLoop();
                 else if (LoadGameUpdate) LoadGameLoop();
                 else if (OptionsUpdate) OptionsLoop();
+                else if (CreditsUpdate) CreditsLoop();
             }
             else
             {
@@ -173,7 +186,7 @@ public class ButtonManager : MonoBehaviour
                             case 1: LoadGame(); break;
                             case 2: break;
                             case 3: Options(); break;
-                            case 4: break;
+                            case 4: Credits(); break;
                             case 5: ChangeSide(); break;
                             default: return;
                         }
@@ -202,7 +215,43 @@ public class ButtonManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    void Credits()
+    {
+        rightAnimator.speed = 0f;
+
+        runCustomUpdate = true;
+        CreditsUpdate = true;
+        creditsArrow.SetActive(true);
+        creditsFirstScreen.SetActive(true);
+    }
+
+    void CreditsLoop()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (creditsFirstScreen.activeSelf)
+            {
+                creditsFirstScreen.SetActive(false);
+                creditsSecondScreen.SetActive(true);
+            }
+            else if (creditsSecondScreen.activeSelf)
+            {
+                creditsSecondScreen.SetActive(false);
+                creditsFirstScreen.SetActive(true);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            rightAnimator.speed = 1f;
+
+            runCustomUpdate = false;
+            CreditsUpdate = false;
+            creditsFirstScreen.SetActive(true);
+            creditsArrow.SetActive(false);
+            creditsSecondScreen.SetActive(false);
+        }
     }
 
     void LoadGameLoop()
@@ -257,10 +306,12 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedInnerIndex == 0 || selectedInnerIndex == 1)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex += 2;
                 }
                 else if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     leftFrom = selectedInnerIndex;
                     selectedInnerIndex = 4;
                 }
@@ -269,10 +320,12 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedInnerIndex == 2 || selectedInnerIndex == 3)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex -= 2;
                 }
                 else if (selectedInnerIndex == 4)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex = leftFrom;
                 }
             }
@@ -280,10 +333,12 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedInnerIndex == 0 || selectedInnerIndex == 2)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex++;
                 }
                 else if (selectedInnerIndex == 4)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     leftFrom = 3;
                 }
             }
@@ -291,10 +346,12 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedInnerIndex == 1 || selectedInnerIndex == 3)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex--;
                 }
                 else if (selectedInnerIndex == 4)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     leftFrom = 2;
                 }
             }
@@ -337,11 +394,21 @@ public class ButtonManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                if (selectedInnerIndex == 1) selectedInnerIndex--;
+                if (selectedInnerIndex == 1)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    selectedInnerIndex--;
+                }
+
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                if (selectedInnerIndex == 0) selectedInnerIndex++;
+                if (selectedInnerIndex == 0)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    selectedInnerIndex++;
+                }
+
             }
             yesNoAnimator.Play(selectedInnerIndex.ToString());
             return;
@@ -541,12 +608,14 @@ public class ButtonManager : MonoBehaviour
         {
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 0) GameManager.instance.Volume--;
+                if (GameManager.instance.Volume != 0) GameManager.instance.Volume -= 0.1f;
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                for (int i = 0; i < GameManager.instance.Volume; i++)
+                Debug.Log(GameManager.instance.Volume);
+                Debug.Log(GameManager.instance.Volume * 10);
+                for (int i = 0; i < (GameManager.instance.Volume * 10); i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
                 }
@@ -556,12 +625,12 @@ public class ButtonManager : MonoBehaviour
         {
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 10) GameManager.instance.Volume++;
+                if (GameManager.instance.Volume != 10) GameManager.instance.Volume += 0.1f;
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                for (int i = 0; i < GameManager.instance.Volume; i++)
+                for (int i = 0; i < (GameManager.instance.Volume * 10); i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
                 }
@@ -626,6 +695,7 @@ public class ButtonManager : MonoBehaviour
 
     private void HandleButtonMove(KeyCode pressed)
     {
+        AudioManager.Instance.PlaySound("buttonSelectSound");
         if (selectedIndex == 0)
         {
             yesNoPart.SetActive(false);

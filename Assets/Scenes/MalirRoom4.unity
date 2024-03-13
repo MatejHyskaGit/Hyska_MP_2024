@@ -1095,6 +1095,46 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 102f47680dbd00a4d80b3027d50d842b, type: 3}
+--- !u!1 &1239321059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3229844878481478314, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4961993980539265662, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5099474129331939961, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3986220953102434, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4669581967083157019, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5710775384548313243, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3502597574303020856, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239321066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 236885867766173111, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 215635197}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1277683600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,9 +1460,17 @@ PrefabInstance:
       value: PauseManager
       objectReference: {fileID: 0}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: SavePanel
+      value: 
+      objectReference: {fileID: 1239321066}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: itemImage
       value: 
       objectReference: {fileID: 985677773}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: yesNoPart
+      value: 
+      objectReference: {fileID: 1239321060}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: PausePanel
       value: 
@@ -1431,6 +1479,10 @@ PrefabInstance:
       propertyPath: PauseCanvas
       value: 
       objectReference: {fileID: 215635198}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilePart
+      value: 
+      objectReference: {fileID: 1239321065}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: SettingsPanel
       value: 
@@ -1459,6 +1511,30 @@ PrefabInstance:
       propertyPath: inventoryAnimator
       value: 
       objectReference: {fileID: 215635202}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: newGameTextObject
+      value: 
+      objectReference: {fileID: 1239321059}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1239321064}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1239321063}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 1239321062}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 1239321061}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: optionsSoundImages.Array.data[0]
       value: 

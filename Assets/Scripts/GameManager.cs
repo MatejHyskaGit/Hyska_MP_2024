@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public int diceGameCount = 0;
 
     [NonSerialized]
-    public int Volume;
+    public float Volume;
 
     public List<Item> ItemListGM { get; set; } = new List<Item> { };
 
@@ -44,8 +44,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [SerializeField] private Animator ItemGetAnimator;
 
     [SerializeField] private Image ItemImage;
-
-    [SerializeField] private TextMeshProUGUI plusText;
 
     [SerializeField] private Sprite HeartSprite;
 
@@ -97,7 +95,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
-        Volume = 5;
+        Volume = 0.5f; 
         puzzleOneIsFinished = false;
         updateHearts();
     }
@@ -161,7 +159,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void AddItem(Item item)
     {
-        plusText.text = "+";
         ItemListGM.Add(item);
         ItemImage.sprite = item.Icon;
         ItemGetAnimator.Play("GetItem");
@@ -169,7 +166,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void GetHeart()
     {
-        plusText.text = "+";
         Sprite hp = Resources.Load<Sprite>("Sprites/hp");
         ItemImage.sprite = hp;
         heartCount++;
@@ -179,7 +175,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void LoseHeart()
     {
-        plusText.text = "-";
         heartCount--;
         updateHearts();
         ItemGetAnimator.Play("LoseHeart");
@@ -214,7 +209,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
         loadedPlayerPos = data.playerPosition;
         justLoaded = true;
         this.dialogueIndex = data.dialogueLog;
-        //this.ItemListGM = data.ItemList;
+        this.ItemListGM = new List<Item>();
+        foreach (ItemIM item in data.ItemList)
+        {
+            Sprite sprite = Resources.Load<Sprite>("Sprites/" + item.IconName);
+            this.ItemListGM.Add(new Item() { Name = item.Name, Icon = sprite, Description = item.Description });
+        }
     }
 
     public void SaveData(ref GameData data)
@@ -222,7 +222,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.heartCount = this.heartCount;
         data.lastScene = SceneManager.GetActiveScene().name;
         data.dialogueLog = this.dialogueIndex;
-        //data.ItemList = this.ItemListGM;
+        data.ItemList = new List<ItemIM>();
+        foreach (Item item in this.ItemListGM)
+        {
+            data.ItemList.Add(new ItemIM() { Name = item.Name, IconName = item.Icon.name, Description = item.Description });
+        }
     }
 
     private void updateHearts()

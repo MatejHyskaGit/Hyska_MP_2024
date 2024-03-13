@@ -33,7 +33,6 @@ public class TriggerScript : MonoBehaviour
                     DialogueManager.instance.EnterDialogueMode(lockedDialogue);
                 }
             }
-
             if (name == "DoorToNext1")
             {
                 if (!StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "down");
@@ -54,6 +53,10 @@ public class TriggerScript : MonoBehaviour
         {
             TextAsset dontFallDialogue = Resources.Load<TextAsset>("Dialogues/DontFallDialogue");
             if (name == "trigger" || name == "trigger1") DialogueManager.instance.EnterDialogueMode(dontFallDialogue);
+        }
+        if (scene.name == "MalirRoom6")
+        {
+            if (name == "DoorBack" || name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom5");
         }
 
         /*

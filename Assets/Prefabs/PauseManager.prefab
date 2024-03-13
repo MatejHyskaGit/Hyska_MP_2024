@@ -48,7 +48,11 @@ MonoBehaviour:
   PausePanel: {fileID: 0}
   pauseAnimator: {fileID: 0}
   SavePanel: {fileID: 0}
-  saveFilesObjects: []
+  saveFilesObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   coloredSaveSprites:
   - {fileID: -960803784, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}
   - {fileID: 1674774110, guid: 33106b3fd1a2c224396a493bf3c812da, type: 3}

@@ -472,6 +472,46 @@ Transform:
   - {fileID: 890056352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &811596805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3229844878481478314, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4961993980539265662, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5099474129331939961, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3986220953102434, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4669581967083157019, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5710775384548313243, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3502597574303020856, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &811596812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 236885867766173111, guid: 97494a4abf45b534ab50a4de3839135c, type: 3}
+  m_PrefabInstance: {fileID: 1299137227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &890056351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7654,9 +7694,17 @@ PrefabInstance:
       value: PauseManager
       objectReference: {fileID: 0}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: SavePanel
+      value: 
+      objectReference: {fileID: 811596812}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: itemImage
       value: 
       objectReference: {fileID: 111356605}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: yesNoPart
+      value: 
+      objectReference: {fileID: 811596806}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: PausePanel
       value: 
@@ -7665,6 +7713,10 @@ PrefabInstance:
       propertyPath: PauseCanvas
       value: 
       objectReference: {fileID: 1299137243}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilePart
+      value: 
+      objectReference: {fileID: 811596811}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: SettingsPanel
       value: 
@@ -7693,6 +7745,30 @@ PrefabInstance:
       propertyPath: inventoryAnimator
       value: 
       objectReference: {fileID: 556815760}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: newGameTextObject
+      value: 
+      objectReference: {fileID: 811596805}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 811596810}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 811596809}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 811596808}
+    - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
+      propertyPath: saveFilesObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 811596807}
     - target: {fileID: 5686681731448078965, guid: 8aaf1b8004553554a9eb97a6638e9414, type: 3}
       propertyPath: optionsSoundImages.Array.data[0]
       value: 
