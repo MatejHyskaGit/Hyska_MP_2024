@@ -7,7 +7,7 @@ Celý dny někde lítá, pak přijde sem a koukej na něj!
 Místo hraní kostek se mnou, spí! 
 Pořád jenom spí...
 Možná už ho nebaví hrát. #portrait:rynn_neutral #speaker:Rynn
-Nesmysl... Ale tebe to určitě bavit bude, že jo? #portrait:anthony_neutral #speaker:Anthony
+Nesmysl... Ale tebe by to bavilo, že jo? #portrait:anthony_neutral #speaker:Anthony
 Nikdy jsem nehrála... #portrait:rynn_neutral #speaker:Rynn
 Je to úplně snadný, já hodím, ty hodíš, komu padnou vyšší čísla, ten vyhraje cenu. #portrait:anthony_neutral #speaker:Anthony
 Cenu? #portrait:rynn_neutral #speaker:Rynn
