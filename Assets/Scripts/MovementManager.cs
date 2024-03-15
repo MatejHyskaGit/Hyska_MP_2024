@@ -275,6 +275,26 @@ public class MovementManager : MonoBehaviour, IDataPersistence
                     }
                 }
             }
+            if (scene.name == "MalirRoom6")
+            {
+                if (lastSceneName == "MalirRoom7")
+                {
+                    if (GameManager.instance.pos == "up")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                    else if (GameManager.instance.pos == "down")
+                    {
+                        if (spawnPoint.name == "SpawnPoint1d")
+                        {
+                            transform.position = spawnPoint.transform.position - (Vector3)bcollider.offset;
+                        }
+                    }
+                }
+            }
         }
     }
 

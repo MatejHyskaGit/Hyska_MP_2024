@@ -86,6 +86,13 @@ public class TriggerScript : MonoBehaviour
         {
             AudioManager.Instance.PlaySound("openDoor");
             if (name == "DoorBack" || name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom5");
+            if (name == "DoorToNext" || name == "DoorToNext1") GameManager.instance.LoadScene("MalirRoom7");
+        }
+        if (scene.name == "MalirRoom7")
+        {
+            AudioManager.Instance.PlaySound("openDoor");
+            if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom6", "up");
+            if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom6", "down");
         }
 
         /*
