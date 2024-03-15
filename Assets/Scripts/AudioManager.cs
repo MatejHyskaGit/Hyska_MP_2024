@@ -8,13 +8,21 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update()
     {
-        soundEffectsSource.volume = (float)(GameManager.instance.Volume / 10);
-        backgroundMusicSource.volume = (float)(GameManager.instance.Volume / 10);
+        soundEffectsSource.volume = (GameManager.instance.Volume / 10);
+        backgroundMusicSource.volume = (GameManager.instance.Volume / 10);
     }
 
     [Header("Sound Players")]
@@ -25,10 +33,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip openDoor;
     [SerializeField] private AudioClip lockedDoor;
     [SerializeField] private AudioClip itemGet;
+    [SerializeField] private AudioClip lifeLose;
 
     [Header("Menu")]
     [SerializeField] private AudioClip buttonSelectSound;
     [SerializeField] private AudioClip buttonPressSound;
+    [SerializeField] private AudioClip menuMusic;
 
     [Header("Tavern")]
     [SerializeField] private AudioClip tavernMusic;
@@ -40,6 +50,7 @@ public class AudioManager : MonoBehaviour
     [Header("MalirRoom3")]
     [SerializeField] private AudioClip basementMusic;
     [SerializeField] private AudioClip puzzleFinished;
+    [SerializeField] private AudioClip fallHole;
 
     public void PlaySound(string soundName)
     {
@@ -51,6 +62,7 @@ public class AudioManager : MonoBehaviour
             case "buttonSelectSound": soundEffectsSource.clip = buttonSelectSound; break;
             case "buttonPressSound": soundEffectsSource.clip = buttonPressSound; break;
             case "puzzleFinished": soundEffectsSource.clip = puzzleFinished; break;
+            case "fallHole": soundEffectsSource.clip = fallHole; break;
             default: return;
         }
         soundEffectsSource.Play();
@@ -60,6 +72,7 @@ public class AudioManager : MonoBehaviour
     {
         switch (musicName)
         {
+            case "menuMusic": backgroundMusicSource.clip = menuMusic; break;
             case "tavernMusic": backgroundMusicSource.clip = tavernMusic; break;
             case "basementMusic": backgroundMusicSource.clip = basementMusic; break;
             default: return;

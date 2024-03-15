@@ -18,6 +18,7 @@ public class WhenInteracted : MonoBehaviour
                     if (GameManager.instance.NathanielGone)
                     {
                         GameManager.instance.LoadScene("MalirRoom1");
+                        AudioManager.Instance.PlaySound("openDoor");
                     }
                     else
                     {
@@ -35,6 +36,7 @@ public class WhenInteracted : MonoBehaviour
         }
         if (scene.name == "MalirRoom5")
         {
+            AudioManager.Instance.PlaySound("openDoor");
             if (name == "DoorToNext" || name == "DoorToNext1") GameManager.instance.LoadScene("MalirRoom6");
             if (name == "DoorBack" || name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom4");
         }

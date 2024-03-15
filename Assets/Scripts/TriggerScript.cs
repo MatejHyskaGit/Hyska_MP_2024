@@ -11,6 +11,7 @@ public class TriggerScript : MonoBehaviour
 
         if (scene.name == "MalirRoom1")
         {
+            AudioManager.Instance.PlaySound("openDoor");
             if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom2", "up");
             if (name == "DoorToNext1") GameManager.instance.LoadScene("MalirRoom2", "down");
             if (name == "DoorBack") GameManager.instance.LoadScene("Tavern");
@@ -18,33 +19,60 @@ public class TriggerScript : MonoBehaviour
         }
         if (scene.name == "MalirRoom2")
         {
-            if (name == "DiraTrigger" || name == "DiraTrigger1") GameManager.instance.LoadScene("MalirRoom3");
-            if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom1", "up");
-            if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom1", "down");
+            if (name == "DiraTrigger" || name == "DiraTrigger1")
+            {
+                GameManager.instance.LoadScene("MalirRoom3");
+                AudioManager.Instance.PlaySound("fallHole");
+            }
+
+            if (name == "DoorBack")
+            {
+                GameManager.instance.LoadScene("MalirRoom1", "up");
+                AudioManager.Instance.PlaySound("openDoor");
+            }
+            if (name == "DoorBack1")
+            {
+                GameManager.instance.LoadScene("MalirRoom1", "down");
+                AudioManager.Instance.PlaySound("openDoor");
+            }
+
         }
         if (scene.name == "MalirRoom3")
         {
             if (name == "DoorToNext")
             {
-                if (!StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "up");
+                if (!StatueManager.isLocked)
+                {
+                    GameManager.instance.LoadScene("MalirRoom4", "up");
+                    AudioManager.Instance.PlaySound("openDoor");
+                }
+
                 else
                 {
                     TextAsset lockedDialogue = Resources.Load<TextAsset>("Dialogues/LockedDialogue");
                     DialogueManager.instance.EnterDialogueMode(lockedDialogue);
+                    AudioManager.Instance.PlaySound("lockedDoor");
                 }
             }
             if (name == "DoorToNext1")
             {
-                if (!StatueManager.isLocked) GameManager.instance.LoadScene("MalirRoom4", "down");
+                if (!StatueManager.isLocked)
+                {
+                    GameManager.instance.LoadScene("MalirRoom4", "down");
+                    AudioManager.Instance.PlaySound("openDoor");
+                }
+
                 else
                 {
                     TextAsset lockedDialogue = Resources.Load<TextAsset>("Dialogues/LockedDialogue");
                     DialogueManager.instance.EnterDialogueMode(lockedDialogue);
+                    AudioManager.Instance.PlaySound("lockedDoor");
                 }
             }
         }
         if (scene.name == "MalirRoom4")
         {
+            AudioManager.Instance.PlaySound("openDoor");
             if (name == "DoorToNext") GameManager.instance.LoadScene("MalirRoom5");
             if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom3", "up");
             if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom3", "down");
@@ -56,6 +84,7 @@ public class TriggerScript : MonoBehaviour
         }
         if (scene.name == "MalirRoom6")
         {
+            AudioManager.Instance.PlaySound("openDoor");
             if (name == "DoorBack" || name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom5");
         }
 

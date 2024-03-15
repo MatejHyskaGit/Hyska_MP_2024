@@ -95,9 +95,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
-        Volume = 0.5f; 
+        Volume = 0.5f;
         puzzleOneIsFinished = false;
         updateHearts();
+        AudioManager.Instance.PlayMusic("menuMusic");
     }
 
     public void WriteIndex(string objName, int indexNum)
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         updateHearts();
+
         if (MovementManager.instance != null && justLoaded)
         {
             MovementManager.instance.gameObject.transform.position = loadedPlayerPos;
@@ -124,10 +126,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         switch (SceneManager.GetActiveScene().name)
         {
-            case "Menu": light2D.GetComponent<Light2D>().intensity = 0.035f; break;
-            case "Tavern": RoomInitializer.instance.Initialize(); break;
+            case "Menu": AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.035f; break;
+            case "Tavern": AudioManager.Instance.PlayMusic("tavernMusic"); RoomInitializer.instance.Initialize(); break;
             case "MalirRoom1": light2D.GetComponent<Light2D>().intensity = 0.4f; RoomInitializer.instance.Initialize(); break;
-            case "MalirRoom3": light2D.GetComponent<Light2D>().intensity = 0f; RoomInitializer.instance.Initialize(); CrossFadeLoadScript.SceneUpdate(); break;
+            case "MalirRoom3": AudioManager.Instance.PlayMusic("basementMusic"); light2D.GetComponent<Light2D>().intensity = 0f; RoomInitializer.instance.Initialize(); CrossFadeLoadScript.SceneUpdate(); break;
             default: light2D.GetComponent<Light2D>().intensity = 0.1f; break;
         }
     }
@@ -162,6 +164,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         ItemListGM.Add(item);
         ItemImage.sprite = item.Icon;
         ItemGetAnimator.Play("GetItem");
+        AudioManager.Instance.PlaySound("itemGet");
     }
 
     public void GetHeart()
@@ -171,6 +174,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         heartCount++;
         updateHearts();
         ItemGetAnimator.Play("GetItem");
+        AudioManager.Instance.PlaySound("itemGet");
     }
 
     public void LoseHeart()
@@ -178,6 +182,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         heartCount--;
         updateHearts();
         ItemGetAnimator.Play("LoseHeart");
+        AudioManager.Instance.PlaySound("lifeLose");
     }
 
     public void RemoveItem(Item item)

@@ -170,6 +170,7 @@ public class ButtonManager : MonoBehaviour
                         {
                             case 0://zmáčnuto tlačítko Start
                                 ChangeSide();
+                                AudioManager.Instance.PlaySound("buttonPressSound");
                                 break;
                             case 1: //zmáčnuto Quit
                                     // ukaž are you sure, po vybrání exit
@@ -180,6 +181,7 @@ public class ButtonManager : MonoBehaviour
                     }
                     else // pravá strana
                     {
+                        AudioManager.Instance.PlaySound("buttonPressSound");
                         switch (selectedIndex)
                         {
                             case 0: NewGame(); return;
@@ -187,21 +189,10 @@ public class ButtonManager : MonoBehaviour
                             case 2: break;
                             case 3: Options(); break;
                             case 4: Credits(); break;
-                            case 5: ChangeSide(); break;
+                            case 5: Exit(); break;
                             default: return;
                         }
                     }
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-                {
-                    HandleButtonMove(KeyCode.LeftArrow);
-                    return;
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                {
-                    HandleButtonMove(KeyCode.RightArrow);
-                    return;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
@@ -260,6 +251,7 @@ public class ButtonManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 rightAnimator.enabled = false;
                 rightAnimator.enabled = true;
                 saveFilePart.SetActive(false);
@@ -267,12 +259,13 @@ public class ButtonManager : MonoBehaviour
                 rightAnimator.speed = 1f;
                 runCustomUpdate = false;
                 LoadGameUpdate = false;
-                selectedIndex = 0;
+                selectedIndex = 1;
                 rightAnimator.Play(selectedIndex.ToString());
                 return;
             }
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 if (selectedInnerIndex == 4)
                 {
                     rightAnimator.enabled = false;
@@ -362,6 +355,7 @@ public class ButtonManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 switch (selectedInnerIndex)
                 {
                     case 0:
@@ -384,6 +378,7 @@ public class ButtonManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 saveFilePart.SetActive(true);
                 yesNoPart.SetActive(false);
                 selectedFile = false;
@@ -433,6 +428,7 @@ public class ButtonManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 rightAnimator.enabled = false;
                 rightAnimator.enabled = true;
                 saveFilePart.SetActive(false);
@@ -446,6 +442,7 @@ public class ButtonManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 if (selectedInnerIndex == 4)
                 {
                     rightAnimator.enabled = false;
@@ -527,6 +524,7 @@ public class ButtonManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 switch (selectedInnerIndex)
                 {
                     case 0:
@@ -549,6 +547,8 @@ public class ButtonManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 saveFilePart.SetActive(true);
                 yesNoPart.SetActive(false);
                 selectedFile = false;
@@ -639,7 +639,7 @@ public class ButtonManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
 
-
+            AudioManager.Instance.PlaySound("buttonPressSound");
             switch (selectedInnerIndex)
             {
                 case 0:
@@ -667,6 +667,7 @@ public class ButtonManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.Instance.PlaySound("buttonPressSound");
             rightAnimator.speed = 1f;
             optionsAnimator.Play("default");
             runCustomUpdate = false;
@@ -695,32 +696,10 @@ public class ButtonManager : MonoBehaviour
 
     private void HandleButtonMove(KeyCode pressed)
     {
-        AudioManager.Instance.PlaySound("buttonSelectSound");
+
         if (selectedIndex == 0)
         {
             yesNoPart.SetActive(false);
-        }
-        if (pressed == KeyCode.LeftArrow)
-        {
-            if (!side)//left
-            {
-                if (selectedIndex != 1)
-                {
-                    selectedIndex++;
-                    leftAnimator.Play(selectedIndex.ToString());
-                }
-            }
-        }
-        if (pressed == KeyCode.RightArrow)
-        {
-            if (!side)
-            {
-                if (selectedIndex != 0)
-                {
-                    selectedIndex--;
-                    leftAnimator.Play(selectedIndex.ToString());
-                }
-            }
         }
         if (pressed == KeyCode.DownArrow)
         {
@@ -728,6 +707,7 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedIndex != 5)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedIndex++;
                     rightAnimator.Play(selectedIndex.ToString());
                 }
@@ -739,6 +719,7 @@ public class ButtonManager : MonoBehaviour
             {
                 if (selectedIndex != 0)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedIndex--;
                     rightAnimator.Play(selectedIndex.ToString());
                 }
