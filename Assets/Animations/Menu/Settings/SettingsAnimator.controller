@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-8380696804078070748
+--- !u!1102 &-8976584697706696330
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 2
+  m_Name: 3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -42,11 +42,14 @@ AnimatorStateMachine:
     m_State: {fileID: 2192602671989072008}
     m_Position: {x: 290, y: 180, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 3903355171279801605}
-    m_Position: {x: 300, y: 240, z: 0}
+    m_State: {fileID: 6374185677794877169}
+    m_Position: {x: 290, y: 220, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8380696804078070748}
-    m_Position: {x: 310, y: 300, z: 0}
+    m_State: {fileID: 1062722320145872222}
+    m_Position: {x: 290, y: 260, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8976584697706696330}
+    m_Position: {x: 290, y: 300, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -79,6 +82,32 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!1102 &1062722320145872222
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: dcdada2cba838ea4aa884895c7220a4d, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &2192602671989072008
 AnimatorState:
   serializedVersion: 6
@@ -105,7 +134,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &3903355171279801605
+--- !u!1102 &6374185677794877169
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1

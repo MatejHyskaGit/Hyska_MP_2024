@@ -1,1 +1,1 @@
-Nic dalšího tu není.. #layout:rightBlank
+Nic dalšího tu není... #layout:rightBlank

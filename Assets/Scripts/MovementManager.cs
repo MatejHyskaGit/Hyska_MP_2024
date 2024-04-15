@@ -128,24 +128,27 @@ public class MovementManager : MonoBehaviour, IDataPersistence
             return false;
         foreach (var objToPush in ObjToPush)
         {
-            BoxCollider2D bcolliderpush = objToPush.GetComponent<BoxCollider2D>();
+            BoxCollider2D[] bcolliderpushes = objToPush.GetComponents<BoxCollider2D>();
             //Debug.Log(newPos);
             //Debug.Log(objToPush.transform.position + (Vector3)bcolliderpush.offset);
-            if (Math.Round(objToPush.transform.position.x + bcolliderpush.offset.x, 2) == Math.Round(newPos.x, 2) && Math.Round(objToPush.transform.position.y + bcolliderpush.offset.y, 2) == Math.Round(newPos.y, 2))
+            foreach (BoxCollider2D bcolliderpush in bcolliderpushes)
             {
-                timeToMove = 0.20f;
-                Debug.Log("Hello");
-                Push objpush = objToPush.GetComponent<Push>();
-                Debug.Log(objpush);
-                if (objpush && objpush.ObjCanMove(direction))
+                if (Math.Round(objToPush.transform.position.x + bcolliderpush.offset.x, 2) == Math.Round(newPos.x, 2) && Math.Round(objToPush.transform.position.y + bcolliderpush.offset.y, 2) == Math.Round(newPos.y, 2))
                 {
-                    Debug.Log("Hey Move pls");
-                    StartCoroutine(objpush.Move(direction));
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    timeToMove = 0.20f;
+                    Debug.Log("Hello");
+                    Push objpush = objToPush.GetComponent<Push>();
+                    Debug.Log(objpush);
+                    if (objpush.ObjCanMove(direction))
+                    {
+                        Debug.Log("Hey Move pls");
+                        StartCoroutine(objpush.Move(direction));
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }

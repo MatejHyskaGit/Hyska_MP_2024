@@ -66,12 +66,16 @@ public class DialogueManager : MonoBehaviour
     [Header("MalirRoom1")]
     [SerializeField] private GameObject boxWing;
     [SerializeField] private GameObject boxRat;
+    [SerializeField] private GameObject boxFlower;
 
     [Header("MalirRoom3")]
     [SerializeField] private GameObject statueLeft;
     [SerializeField] private GameObject statueMid;
     [SerializeField] private GameObject statueRight;
     [SerializeField] private GameObject boxPaper;
+
+    [Header("MalirRoom7")]
+    [SerializeField] private GameObject malirNPC;
 
 
 
@@ -162,6 +166,7 @@ public class DialogueManager : MonoBehaviour
         {
             inkExternalFunctions.Bind(currentStory, boxWing);
             inkExternalFunctions.Bind(currentStory, boxRat);
+            inkExternalFunctions.Bind(currentStory, boxFlower);
         }
 
         if (SceneManager.GetActiveScene().name == "MalirRoom3")
@@ -170,6 +175,11 @@ public class DialogueManager : MonoBehaviour
             inkExternalFunctions.Bind(currentStory, statueMid);
             inkExternalFunctions.Bind(currentStory, statueRight);
             inkExternalFunctions.Bind(currentStory, boxPaper);
+        }
+
+        if (SceneManager.GetActiveScene().name == "MalirRoom7")
+        {
+            inkExternalFunctions.Bind(currentStory, malirNPC);
         }
 
 

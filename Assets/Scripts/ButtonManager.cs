@@ -36,8 +36,10 @@ public class ButtonManager : MonoBehaviour
     int leftFrom = 0;
 
     [Header("Options Block")]
-    [SerializeField] private GameObject[] optionsObjects;
+    [SerializeField] private GameObject[] optionsSFXObjects;
+    [SerializeField] private GameObject[] optionsMusicObjects;
     private Image[] optionsSoundImages;
+    private Image[] optionsMusicImages;
     [SerializeField] private Image VsyncImageSwitch;
     [SerializeField] private Sprite volumeSpriteOn;
     [SerializeField] private Sprite volumeSpriteOff;
@@ -83,7 +85,8 @@ public class ButtonManager : MonoBehaviour
 
         saveFileImages = new Image[saveFilesObjects.Length];
 
-        optionsSoundImages = new Image[optionsObjects.Length];
+        optionsSoundImages = new Image[optionsSFXObjects.Length];
+        optionsMusicImages = new Image[optionsMusicObjects.Length];
 
 
 
@@ -104,23 +107,40 @@ public class ButtonManager : MonoBehaviour
             index++;
         }
 
+        //SFX Init
         index = 0;
-        foreach (GameObject obj in optionsObjects)
+        foreach (GameObject obj in optionsSFXObjects)
         {
             optionsSoundImages[index] = obj.GetComponent<Image>();
             index++;
         }
 
-
         foreach (Image soundimage in optionsSoundImages)
         {
             soundimage.sprite = volumeSpriteOff;
         }
-        Debug.Log((int)GameManager.instance.Volume * 10);
-        for (int i = 0; i < (int)GameManager.instance.Volume * 10; i++)
+        for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
         {
             optionsSoundImages[i].sprite = volumeSpriteOn;
         }
+
+        //Music Init
+        index = 0;
+        foreach (GameObject obj in optionsMusicObjects)
+        {
+            optionsMusicImages[index] = obj.GetComponent<Image>();
+            index++;
+        }
+
+        foreach (Image musicimage in optionsMusicImages)
+        {
+            musicimage.sprite = volumeSpriteOff;
+        }
+        for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+        {
+            optionsMusicImages[i].sprite = volumeSpriteOn;
+        }
+        //VSync init
         if (QualitySettings.vSyncCount == 0) VsyncImageSwitch.sprite = switchSpriteOff;
         else if (QualitySettings.vSyncCount == 1) VsyncImageSwitch.sprite = switchSpriteOn;
 
@@ -596,7 +616,7 @@ public class ButtonManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            if (selectedInnerIndex != 2) selectedInnerIndex++;
+            if (selectedInnerIndex != 3) selectedInnerIndex++;
             optionsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -608,43 +628,91 @@ public class ButtonManager : MonoBehaviour
         {
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 0) GameManager.instance.Volume -= 0.1f;
+                if (GameManager.instance.VolumeSFX != 0)
+                {
+                    GameManager.instance.VolumeSFX -= 1;
+                    PlayerPrefs.SetInt("SFXVol", GameManager.instance.VolumeSFX);
+                }
+
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                Debug.Log(GameManager.instance.Volume);
-                Debug.Log(GameManager.instance.Volume * 10);
-                for (int i = 0; i < (GameManager.instance.Volume * 10); i++)
+                for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
                 }
             }
+            else if (selectedInnerIndex == 1)
+            {
+                if (GameManager.instance.VolumeMusic != 0)
+                {
+                    GameManager.instance.VolumeMusic -= 1;
+                    PlayerPrefs.SetInt("MusicVol", GameManager.instance.VolumeMusic);
+                }
+                foreach (Image soundimage in optionsMusicImages)
+                {
+                    soundimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+                {
+                    optionsMusicImages[i].sprite = volumeSpriteOn;
+                }
+            }
+            Debug.Log("SFX: " + GameManager.instance.VolumeSFX + ", " + (float)GameManager.instance.VolumeSFX / 10);
+            Debug.Log("Music: " + GameManager.instance.VolumeMusic + ", " + (float)GameManager.instance.VolumeMusic / 10);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 10) GameManager.instance.Volume += 0.1f;
+                if (GameManager.instance.VolumeSFX != 10)
+                {
+                    GameManager.instance.VolumeSFX += 1;
+                    PlayerPrefs.SetInt("SFXVol", GameManager.instance.VolumeSFX);
+                }
+
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                for (int i = 0; i < (GameManager.instance.Volume * 10); i++)
+                for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
                 }
             }
+            else if (selectedInnerIndex == 1)
+            {
+                if (GameManager.instance.VolumeMusic != 10)
+                {
+                    GameManager.instance.VolumeMusic += 1;
+                    PlayerPrefs.SetInt("MusicVol", GameManager.instance.VolumeMusic);
+                }
+                foreach (Image soundimage in optionsMusicImages)
+                {
+                    soundimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+                {
+                    optionsMusicImages[i].sprite = volumeSpriteOn;
+                }
+            }
+            Debug.Log("SFX: " + GameManager.instance.VolumeSFX + ", " + GameManager.instance.VolumeSFX / 10);
+            Debug.Log("Music: " + GameManager.instance.VolumeMusic + ", " + GameManager.instance.VolumeMusic / 10);
         }
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
 
-            AudioManager.Instance.PlaySound("buttonPressSound");
+
             switch (selectedInnerIndex)
             {
                 case 0:
                     break;
                 case 1:
+                    break;
+                case 2:
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                     if (VsyncImageSwitch.sprite == switchSpriteOff)
                     {
                         VsyncImageSwitch.sprite = switchSpriteOn;
@@ -656,7 +724,8 @@ public class ButtonManager : MonoBehaviour
                         QualitySettings.vSyncCount = 0;
                     }
                     break;
-                case 2:
+                case 3:
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                     rightAnimator.speed = 1f;
                     optionsAnimator.Play("default");
                     runCustomUpdate = false;

@@ -167,7 +167,13 @@ public class InkExternalFunctions
             {
                 Sprite[] sprite = Resources.LoadAll<Sprite>("Sprites/smrtacek_1");
                 Item item = new Item { Name = "Opracovaný kámen", Icon = sprite[1], Description = "Opracovaný kus kamene, trochu připomíná křídlo" };
+                GameManager.instance.malirroom1item = true;
                 GameManager.instance.AddItem(item);
+            });
+            story.BindExternalFunction("decrementWingIndex", () =>
+            {
+                DialogueTrigger dt = obj.GetComponentInChildren<DialogueTrigger>();
+                if (dt != null) dt.dialogueIndex--;
             });
         }
         if (obj.name == "BoxRat")
@@ -175,6 +181,11 @@ public class InkExternalFunctions
             story.BindExternalFunction("takeRatDamage", () =>
             {
                 GameManager.instance.LoseHeart();
+            });
+            story.BindExternalFunction("decrementRatIndex", () =>
+            {
+                DialogueTrigger dt = obj.GetComponentInChildren<DialogueTrigger>();
+                if (dt != null) dt.dialogueIndex--;
             });
         }
         if (obj.name == "BoxPaper")
@@ -184,6 +195,19 @@ public class InkExternalFunctions
                 Sprite sprite = Resources.Load<Sprite>("Sprites/papir");
                 Item item = new Item { Name = "Papír", Icon = sprite, Description = "Zvláštně pomalovaný papír" };
                 GameManager.instance.AddItem(item);
+            });
+            story.BindExternalFunction("decrementPaperIndex", () =>
+            {
+                DialogueTrigger dt = obj.GetComponentInChildren<DialogueTrigger>();
+                if (dt != null) dt.dialogueIndex--;
+            });
+        }
+        if (obj.name == "FlowerPot")
+        {
+            story.BindExternalFunction("decrementFlowerIndex", () =>
+            {
+                DialogueTrigger dt = obj.GetComponentInChildren<DialogueTrigger>();
+                if (dt != null) dt.dialogueIndex--;
             });
         }
         if (obj.name == "Nathaniel")
@@ -199,7 +223,13 @@ public class InkExternalFunctions
                 nathAnimator.Play("TavernNathanielAnimation2");
             });
         }
-
+        if (obj.name == "NPC")
+        {
+            story.BindExternalFunction("goToEnd", () =>
+            {
+                GameManager.instance.LoadScene("Ending");
+            });
+        }
         //bidnout a nastavit co dělá funknce pro start animace
     }
 

@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public int diceGameCount = 0;
 
     [NonSerialized]
-    public float Volume;
+    public int VolumeSFX;
+
+    [NonSerialized]
+    public int VolumeMusic;
 
     public List<Item> ItemListGM { get; set; } = new List<Item> { };
 
@@ -72,6 +75,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private bool justLoaded = false;
 
+    [NonSerialized]
+    public bool malirroom1item = false;
+
+    [SerializeField]
+    private GameObject heartCanvas;
+
 
 
     void Awake()
@@ -95,7 +104,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         lastSceneName = SceneManager.GetActiveScene().name;
-        Volume = 0.5f;
+        VolumeSFX = PlayerPrefs.GetInt("SFXVol", 5);
+        VolumeMusic = PlayerPrefs.GetInt("MusicVol", 5);
+
+        PlayerPrefs.GetInt("SFXVol");
         puzzleOneIsFinished = false;
         updateHearts();
         AudioManager.Instance.PlayMusic("menuMusic");
@@ -124,13 +136,16 @@ public class GameManager : MonoBehaviour, IDataPersistence
             MovementManager.instance.gameObject.transform.position = loadedPlayerPos;
             justLoaded = false;
         }
+        if (SceneManager.GetActiveScene().name == "Ending") heartCanvas.SetActive(false);
+        else heartCanvas.SetActive(true);
+
         switch (SceneManager.GetActiveScene().name)
         {
             case "Menu": AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.035f; break;
             case "Tavern": AudioManager.Instance.PlayMusic("tavernMusic"); RoomInitializer.instance.Initialize(); break;
             case "MalirRoom1": light2D.GetComponent<Light2D>().intensity = 0.4f; RoomInitializer.instance.Initialize(); break;
             case "MalirRoom3": AudioManager.Instance.PlayMusic("basementMusic"); light2D.GetComponent<Light2D>().intensity = 0f; RoomInitializer.instance.Initialize(); CrossFadeLoadScript.SceneUpdate(); break;
-            default: light2D.GetComponent<Light2D>().intensity = 0.1f; break;
+            default: AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.1f; break;
         }
     }
 
@@ -215,6 +230,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         justLoaded = true;
         this.dialogueIndex = data.dialogueLog;
         this.ItemListGM = new List<Item>();
+        this.InitDialogue = data.tavernInit;
         foreach (ItemIM item in data.ItemList)
         {
             Sprite sprite = Resources.Load<Sprite>("Sprites/" + item.IconName);
@@ -228,6 +244,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.lastScene = SceneManager.GetActiveScene().name;
         data.dialogueLog = this.dialogueIndex;
         data.ItemList = new List<ItemIM>();
+        data.tavernInit = InitDialogue;
         foreach (Item item in this.ItemListGM)
         {
             data.ItemList.Add(new ItemIM() { Name = item.Name, IconName = item.Icon.name, Description = item.Description });

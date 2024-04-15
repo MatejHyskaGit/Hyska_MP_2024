@@ -74,6 +74,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  optionsMusicImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   VsyncImageSwitch: {fileID: 0}
   volumeSpriteOn: {fileID: -1143303550, guid: 65e05f99367bd234590d022af7f062e2, type: 3}
   volumeSpriteOff: {fileID: -1138192362, guid: 65e05f99367bd234590d022af7f062e2, type: 3}

@@ -1,0 +1,1 @@
+Ještě se tu porozhlédnu... #layout:left #portrait:rynn_neutral #speaker:Rynn

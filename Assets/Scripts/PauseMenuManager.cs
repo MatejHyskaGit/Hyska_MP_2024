@@ -35,6 +35,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] GameObject SettingsPanel;
     [SerializeField] Animator settingsAnimator;
     [SerializeField] Image[] optionsSoundImages;
+    [SerializeField] Image[] optionsMusicImages;
     [SerializeField] private Image VsyncImageSwitch;
     [SerializeField] private Sprite volumeSpriteOn;
     [SerializeField] private Sprite volumeSpriteOff;
@@ -94,15 +95,25 @@ public class PauseMenuManager : MonoBehaviour
             index++;
         }
 
-
+        //SFX
         foreach (Image soundimage in optionsSoundImages)
         {
             soundimage.sprite = volumeSpriteOff;
         }
-        for (int i = 0; i < GameManager.instance.Volume; i++)
+        for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
         {
             optionsSoundImages[i].sprite = volumeSpriteOn;
         }
+        //Music
+        foreach (Image musicimage in optionsMusicImages)
+        {
+            musicimage.sprite = volumeSpriteOff;
+        }
+        for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+        {
+            optionsMusicImages[i].sprite = volumeSpriteOn;
+        }
+        //VSync
         if (QualitySettings.vSyncCount == 0)
         {
             VsyncImageSwitch.sprite = switchSpriteOff;
@@ -128,10 +139,12 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (!isPaused)
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 Pause();
             }
             else
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 Resume();
             }
         }
@@ -166,11 +179,11 @@ public class PauseMenuManager : MonoBehaviour
             {
                 switch (selectedIndex)
                 {
-                    case 0: Resume(); break;
-                    case 1: Inventory(); break;
-                    case 2: Save(); break;
-                    case 3: Options(); break;
-                    case 4: MainMenu(); break;
+                    case 0: Resume(); AudioManager.Instance.PlaySound("buttonPressSound"); break;
+                    case 1: Inventory(); AudioManager.Instance.PlaySound("buttonPressSound"); break;
+                    case 2: Save(); AudioManager.Instance.PlaySound("buttonPressSound"); break;
+                    case 3: Options(); AudioManager.Instance.PlaySound("buttonPressSound"); break;
+                    case 4: MainMenu(); AudioManager.Instance.PlaySound("buttonPressSound"); break;
                     default: return;
                 }
             }
@@ -255,10 +268,12 @@ public class PauseMenuManager : MonoBehaviour
                 runCustomUpdate = false;
                 saveUpdate = false;
                 pauseAnimator.Play(selectedIndex.ToString());
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 return;
             }
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 if (selectedInnerIndex == 4)
                 {
                     SavePanel.SetActive(false);
@@ -338,11 +353,24 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
+                AudioManager.Instance.PlaySound("buttonPressSound");
                 switch (selectedInnerIndex)
                 {
                     case 0:
                         Debug.Log("Saving game on file " + selectedFileNum.ToString());
                         DataPersistenceManager.Instance.SaveGame($"data{selectedFileNum}.game");
+                        int index = 0;
+                        foreach (GameObject obj in saveFilesObjects)
+                        {
+                            saveFileImages[index] = obj.GetComponent<Image>();
+                            if (File.Exists(Path.Combine(Application.persistentDataPath, GameManager.instance.Saves[index])))
+                            {
+                                saveFileImages[index].sprite = coloredSaveSprites[index];
+                                //TimePlayedTexts[index].text = "08:51:12";
+                            }
+
+                            index++;
+                        }
 
                         saveFilePart.SetActive(false);
                         yesNoPart.SetActive(false);
@@ -438,6 +466,7 @@ public class PauseMenuManager : MonoBehaviour
                     InventoryManager.Instance.Close();
                     insideInventory = false;
                     papirZoom = false;
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                 }
                 else
                 {
@@ -451,6 +480,7 @@ public class PauseMenuManager : MonoBehaviour
                     runCustomUpdate = false;
                     inventoryUpdate = false;
                     Resume();
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                     foreach (GameObject obj in itemNeeders)
                     {
                         Debug.Log("Starting foreach");
@@ -488,6 +518,7 @@ public class PauseMenuManager : MonoBehaviour
                     {
                         if (InventoryManager.Instance.ItemList[selectedInnerIndex] != null)
                         {
+                            AudioManager.Instance.PlaySound("buttonPressSound");
                             insideInventory = true;
                             InventoryManager.Instance.OpenItem(InventoryManager.Instance.ItemList[selectedInnerIndex].Name);
                         }
@@ -500,12 +531,14 @@ public class PauseMenuManager : MonoBehaviour
                     klicky = true;
                     inventoryAnimator.Play("klicky_pause");
                     itemContainer.SetActive(false);
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                 }
                 else if (klicky)
                 {
                     klicky = false;
                     inventoryAnimator.Play("6");
                     itemContainer.SetActive(true);
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                 }
             }
 
@@ -514,6 +547,7 @@ public class PauseMenuManager : MonoBehaviour
                 if (klicky) return;
                 if (selectedInnerIndex == 0 || selectedInnerIndex == 1 || selectedInnerIndex == 2)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex += 3;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
                 }
@@ -527,6 +561,7 @@ public class PauseMenuManager : MonoBehaviour
                 if (klicky) return;
                 if (selectedInnerIndex == 3 || selectedInnerIndex == 4 || selectedInnerIndex == 5)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex -= 3;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
                 }
@@ -541,11 +576,13 @@ public class PauseMenuManager : MonoBehaviour
                 if (klicky) return;
                 if (selectedInnerIndex == 1 || selectedInnerIndex == 2 || selectedInnerIndex == 4 || selectedInnerIndex == 5)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex--;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
                 }
                 else if (selectedInnerIndex == 6)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex = leftFrom;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
                 }
@@ -555,11 +592,13 @@ public class PauseMenuManager : MonoBehaviour
                 if (klicky) return;
                 if (selectedInnerIndex == 0 || selectedInnerIndex == 3 || selectedInnerIndex == 1 || selectedInnerIndex == 4)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     selectedInnerIndex++;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
                 }
                 else if (selectedInnerIndex == 2 || selectedInnerIndex == 5)
                 {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
                     leftFrom = selectedInnerIndex;
                     selectedInnerIndex = 6;
                     inventoryAnimator.Play(selectedInnerIndex.ToString());
@@ -573,26 +612,56 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            if (selectedInnerIndex != 2) selectedInnerIndex++;
+            if (selectedInnerIndex != 3)
+            {
+                AudioManager.Instance.PlaySound("buttonSelectSound");
+                selectedInnerIndex++;
+            }
             settingsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            if (selectedInnerIndex != 0) selectedInnerIndex--;
+            if (selectedInnerIndex != 0)
+            {
+                AudioManager.Instance.PlaySound("buttonSelectSound");
+                selectedInnerIndex--;
+            }
             settingsAnimator.Play(selectedInnerIndex.ToString());
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 0) GameManager.instance.Volume--;
+                if (GameManager.instance.VolumeSFX != 0)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    GameManager.instance.VolumeSFX--;
+                    PlayerPrefs.SetInt("SFXVol", GameManager.instance.VolumeSFX);
+                }
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                for (int i = 0; i < GameManager.instance.Volume; i++)
+                for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
+                }
+            }
+            if (selectedInnerIndex == 1)
+            {
+                if (GameManager.instance.VolumeMusic != 0)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    GameManager.instance.VolumeMusic--;
+                    PlayerPrefs.SetInt("MusicVol", GameManager.instance.VolumeMusic);
+                }
+                foreach (Image musicimage in optionsMusicImages)
+                {
+                    musicimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+                {
+                    optionsMusicImages[i].sprite = volumeSpriteOn;
                 }
             }
         }
@@ -600,14 +669,36 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (selectedInnerIndex == 0)
             {
-                if (GameManager.instance.Volume != 10) GameManager.instance.Volume++;
+                if (GameManager.instance.VolumeSFX != 10)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    GameManager.instance.VolumeSFX++;
+                    PlayerPrefs.SetInt("SFXVol", GameManager.instance.VolumeSFX);
+                }
                 foreach (Image soundimage in optionsSoundImages)
                 {
                     soundimage.sprite = volumeSpriteOff;
                 }
-                for (int i = 0; i < GameManager.instance.Volume; i++)
+                for (int i = 0; i < GameManager.instance.VolumeSFX; i++)
                 {
                     optionsSoundImages[i].sprite = volumeSpriteOn;
+                }
+            }
+            if (selectedInnerIndex == 1)
+            {
+                if (GameManager.instance.VolumeMusic != 10)
+                {
+                    AudioManager.Instance.PlaySound("buttonSelectSound");
+                    GameManager.instance.VolumeMusic++;
+                    PlayerPrefs.SetInt("MusicVol", GameManager.instance.VolumeMusic);
+                }
+                foreach (Image musicimage in optionsMusicImages)
+                {
+                    musicimage.sprite = volumeSpriteOff;
+                }
+                for (int i = 0; i < GameManager.instance.VolumeMusic; i++)
+                {
+                    optionsMusicImages[i].sprite = volumeSpriteOn;
                 }
             }
         }
@@ -619,6 +710,9 @@ public class PauseMenuManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
+                    break;
+                case 2:
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                     if (VsyncImageSwitch.sprite == switchSpriteOff)
                     {
                         VsyncImageSwitch.sprite = switchSpriteOn;
@@ -630,7 +724,8 @@ public class PauseMenuManager : MonoBehaviour
                         QualitySettings.vSyncCount = 0;
                     }
                     break; //změň sprite, vypni vsync
-                case 2:
+                case 3:
+                    AudioManager.Instance.PlaySound("buttonPressSound");
                     SettingsPanel.SetActive(false);
                     PausePanel.SetActive(true);
                     runCustomUpdate = false;
@@ -642,6 +737,7 @@ public class PauseMenuManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.Instance.PlaySound("buttonPressSound");
             SettingsPanel.SetActive(false);
             PausePanel.SetActive(true);
             runCustomUpdate = false;

@@ -1,1 +1,1 @@
-Co tu furt šmatáš? Zmiz odsud už! #layout:left #speaker:Arthur #portrait:bartender_neutral
+Co tu furt pobíháš? Zmiz odsud už! #layout:left #speaker:Arthur #portrait:bartender_neutral

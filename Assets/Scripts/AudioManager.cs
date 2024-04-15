@@ -21,8 +21,8 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        soundEffectsSource.volume = (GameManager.instance.Volume / 10);
-        backgroundMusicSource.volume = (GameManager.instance.Volume / 10);
+        soundEffectsSource.volume = (float)GameManager.instance.VolumeSFX / 10;
+        backgroundMusicSource.volume = (float)GameManager.instance.VolumeMusic / 10;
     }
 
     [Header("Sound Players")]
