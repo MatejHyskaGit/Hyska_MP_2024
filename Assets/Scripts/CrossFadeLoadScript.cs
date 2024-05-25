@@ -20,12 +20,17 @@ public class CrossFadeLoadScript : MonoBehaviour
     public void SetLoadTrue()
     {
         GameManager.instance.loading = true;
+        if (SceneManager.GetActiveScene().name == "MalirRoom3" && GameManager.instance.lastSceneName == "Menu")
+        {
+            GameManager.instance.loading = true;
+            SchuteFallManager.instance.StartChute();
+        }
 
     }
     public void SetLoadFalse()
     {
         GameManager.instance.loading = false;
-        if (SceneManager.GetActiveScene().name == "MalirRoom3" && GameManager.instance.lastSceneName == "MalirRoom2")
+        if (SceneManager.GetActiveScene().name == "MalirRoom3" && (GameManager.instance.lastSceneName == "MalirRoom2" || GameManager.instance.lastSceneName == "Menu"))
         {
             GameManager.instance.loading = true;
             SchuteFallManager.instance.StartChute();
@@ -33,6 +38,10 @@ public class CrossFadeLoadScript : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Tavern")
         {
             GameObject.Find("InitDialogue").GetComponentInChildren<DialogueTrigger>().StartInit();
+        }
+        if (SceneManager.GetActiveScene().name == "MalirRoom6")
+        {
+            GameObject.Find("InitDialogueM6").GetComponentInChildren<DialogueTrigger>().StartInit();
         }
     }
 }

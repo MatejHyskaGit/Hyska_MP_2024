@@ -1,0 +1,1 @@
+Tohle asi nezvládneš odsunout sama, co? #layout:left #portrait:nathaniel_neutral #speaker:Nathaniel

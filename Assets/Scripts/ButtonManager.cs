@@ -550,6 +550,9 @@ public class ButtonManager : MonoBehaviour
                     case 0:
                         Debug.Log("Starting game on file " + selectedFileNum.ToString());
                         DataPersistenceManager.Instance.NewGame($"data{selectedFileNum}.game");
+                        DataPersistenceManager.Instance.SaveGame($"data{selectedFileNum}.game");
+                        DataPersistenceManager.Instance.LoadGame($"data{selectedFileNum}.game");
+                        DataPersistenceManager.Instance.DeleteSave($"data{selectedFileNum}.game");
                         //DataPersistenceManager.Instance.LoadGame($"data{selectedFileNum}.game");
                         GameManager.instance.LoadScene("Tavern");
                         break;

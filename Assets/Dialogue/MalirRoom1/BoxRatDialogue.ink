@@ -3,7 +3,7 @@ EXTERNAL decrementRatIndex()
 Pozoruhodná krabice #layout:rightBlank
 +[Prohledat]
     ~takeRatDamage()
-    Au, to byla krysa
+    Au, to byla krysa.
     ->END
 +[Neprohledat]
     ~decrementRatIndex()

@@ -80,6 +80,13 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save(gameData);
     }
 
+    public void DeleteSave(string fileName)
+    {
+        fileNameString = fileName;
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileNameString);
+        dataHandler.Delete();
+    }
+
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();

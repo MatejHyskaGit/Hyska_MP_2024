@@ -42,6 +42,11 @@ public class DialogueTrigger : MonoBehaviour
             GameManager.instance.InitDialogue = true;
             DialogueManager.instance.EnterDialogueMode(inkJSONArray[0]);
         }
+        if (SceneManager.GetActiveScene().name == "MalirRoom6" && NpcObject.name == "InitDialogueM6" && !GameManager.instance.InitDialogueM6)
+        {
+            GameManager.instance.InitDialogueM6 = true;
+            DialogueManager.instance.EnterDialogueMode(inkJSONArray[0]);
+        }
     }
     private void Update()
     {

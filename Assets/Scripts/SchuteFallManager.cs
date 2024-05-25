@@ -19,7 +19,7 @@ public class SchuteFallManager : MonoBehaviour
 
     public void StartChute()
     {
-        if (GameManager.instance.lastSceneName == "MalirRoom4")
+        if (GameManager.instance.lastSceneName == "MalirRoom4" || GameManager.instance.lastSceneName == "Menu")
         {
             SetFollowPlayer();
         }

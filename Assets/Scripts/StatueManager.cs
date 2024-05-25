@@ -98,8 +98,8 @@ public class StatueManager : MonoBehaviour
 
         if (leftSpriteR.sprite.name.Equals(leftSprite.name) && midSpriteR.sprite.name.Equals(rightSprite.name) && rightSpriteR.sprite.name.Equals(rightSprite.name))
         {
+            if (GameManager.instance.puzzleOneIsFinished == false) AudioManager.Instance.PlaySound("puzzleFinished");
             GameManager.instance.puzzleOneIsFinished = true;
-            AudioManager.Instance.PlaySound("puzzleFinished");
             isLocked = false;
             Destroy(leftTrigger);
             Destroy(midTrigger);

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEditor;
 
 public class FileDataHandler
 {
@@ -68,5 +69,10 @@ public class FileDataHandler
         {
             Debug.LogError("Error when trying to save data to file: " + fullPath + "\n" + e);
         }
+    }
+    public void Delete()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        File.Delete(fullPath);
     }
 }

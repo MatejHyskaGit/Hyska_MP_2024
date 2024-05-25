@@ -43,8 +43,8 @@ public class TriggerScript : MonoBehaviour
             {
                 if (!StatueManager.isLocked)
                 {
-                    GameManager.instance.LoadScene("MalirRoom4", "up");
                     AudioManager.Instance.PlaySound("openDoor");
+                    GameManager.instance.LoadScene("MalirRoom4", "up");
                 }
 
                 else
@@ -58,8 +58,8 @@ public class TriggerScript : MonoBehaviour
             {
                 if (!StatueManager.isLocked)
                 {
-                    GameManager.instance.LoadScene("MalirRoom4", "down");
                     AudioManager.Instance.PlaySound("openDoor");
+                    GameManager.instance.LoadScene("MalirRoom4", "down");
                 }
 
                 else
@@ -90,9 +90,22 @@ public class TriggerScript : MonoBehaviour
         }
         if (scene.name == "MalirRoom7")
         {
-            AudioManager.Instance.PlaySound("openDoor");
-            if (name == "DoorBack") GameManager.instance.LoadScene("MalirRoom6", "up");
-            if (name == "DoorBack1") GameManager.instance.LoadScene("MalirRoom6", "down");
+
+            if (name == "DoorBack")
+            {
+                AudioManager.Instance.PlaySound("openDoor");
+                GameManager.instance.LoadScene("MalirRoom6", "up");
+            }
+            if (name == "DoorBack1")
+            {
+                AudioManager.Instance.PlaySound("openDoor");
+                GameManager.instance.LoadScene("MalirRoom6", "down");
+            }
+            TextAsset endDialogue = Resources.Load<TextAsset>("Dialogues/EndDialogue");
+            for (int i = 0; i < 9; i++)
+            {
+                if (name == i.ToString()) DialogueManager.instance.EnterDialogueMode(endDialogue);
+            }
         }
 
         /*

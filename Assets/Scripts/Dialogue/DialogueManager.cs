@@ -186,8 +186,9 @@ public class DialogueManager : MonoBehaviour
 
 
         displayNameText.text = "???";
+        layoutAnimator.Play("left");
         portraitAnimator.Play("default");
-        layoutAnimator.Play("right");
+
 
         ContinueStory();
     }
@@ -197,6 +198,7 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         //inkExternalFunctions.Unbind(currentStory);
+
 
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);

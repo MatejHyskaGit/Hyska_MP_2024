@@ -63,6 +63,7 @@ public class AudioManager : MonoBehaviour
             case "buttonPressSound": soundEffectsSource.clip = buttonPressSound; break;
             case "puzzleFinished": soundEffectsSource.clip = puzzleFinished; break;
             case "fallHole": soundEffectsSource.clip = fallHole; break;
+            case "lifeLose": soundEffectsSource.clip = lifeLose; break;
             default: return;
         }
         soundEffectsSource.Play();

@@ -11,6 +11,11 @@ public class GameData
     public IDictionary<string, int> dialogueLog;
     public List<ItemIM> ItemList;
     public bool tavernInit;
+    public bool statueFixed;
+    public bool puzzleOneFinished;
+    public List<Vector3> Room6PushPositions;
+    public bool itemOneGrabbed;
+    public bool M6Init;
 
     public GameData()
     {
@@ -20,5 +25,10 @@ public class GameData
         this.dialogueLog = new Dictionary<string, int>();
         this.ItemList = new List<ItemIM>();
         this.tavernInit = false;
+        this.statueFixed = false;
+        this.puzzleOneFinished = false;
+        this.Room6PushPositions = new List<Vector3>();
+        this.itemOneGrabbed = false;
+        this.M6Init = false;
     }
 }

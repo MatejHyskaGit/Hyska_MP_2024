@@ -14,7 +14,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour, IDataPersistence
 {
     public static GameManager instance { get; private set; }
-    [NonSerialized]
     public string lastSceneName;
     [NonSerialized]
     public string pos = "";
@@ -73,7 +72,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private Vector3 loadedPlayerPos;
 
-    private bool justLoaded = false;
+    [NonSerialized]
+    public bool justLoaded = false;
 
     [NonSerialized]
     public bool malirroom1item = false;
@@ -81,7 +81,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [SerializeField]
     private GameObject heartCanvas;
 
+    public List<Vector3> Room6PushPositions { get; set; } = new List<Vector3>();
 
+    private Transform[] pushobjs;
+
+    [NonSerialized]
+    public bool InitDialogueM6 = false;
 
     void Awake()
     {
@@ -99,6 +104,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         ItemListGM = new List<Item> { };
 
+        Room6PushPositions = new List<Vector3> { };
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -111,6 +118,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
         puzzleOneIsFinished = false;
         updateHearts();
         AudioManager.Instance.PlayMusic("menuMusic");
+
+
     }
 
     public void WriteIndex(string objName, int indexNum)
@@ -143,15 +152,41 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             case "Menu": AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.035f; break;
             case "Tavern": AudioManager.Instance.PlayMusic("tavernMusic"); RoomInitializer.instance.Initialize(); break;
-            case "MalirRoom1": light2D.GetComponent<Light2D>().intensity = 0.4f; RoomInitializer.instance.Initialize(); break;
-            case "MalirRoom3": AudioManager.Instance.PlayMusic("basementMusic"); light2D.GetComponent<Light2D>().intensity = 0f; RoomInitializer.instance.Initialize(); CrossFadeLoadScript.SceneUpdate(); break;
-            default: AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.1f; break;
+            case "MalirRoom1": if (instance.lastSceneName == "Tavern" || instance.lastSceneName == "Menu") AudioManager.Instance.PlayMusic("menuMusic"); light2D.GetComponent<Light2D>().intensity = 0.4f; RoomInitializer.instance.Initialize(); GameObject push = GameObject.Find("Pushable"); if (instance.malirroom1item && push) push.transform.position = new Vector3((float)-0.88, (float)-0.758, 0); break;
+            case "MalirRoom3": if (instance.lastSceneName == "MalirRoom2" || instance.lastSceneName == "Menu") AudioManager.Instance.PlayMusic("basementMusic"); light2D.GetComponent<Light2D>().intensity = 0f; RoomInitializer.instance.Initialize(); CrossFadeLoadScript.SceneUpdate(); break;
+            case "MalirRoom4": if (instance.lastSceneName == "MalirRoom5" || instance.lastSceneName == "Menu") AudioManager.Instance.PlayMusic("basementMusic"); break;
+            case "MalirRoom5": if (instance.lastSceneName == "MalirRoom4" || instance.lastSceneName == "Menu") AudioManager.Instance.PlayMusic("menuMusic"); break;
+            case "MalirRoom6":
+                GameObject parent = GameObject.Find("MALIR_6"); pushobjs = parent.GetComponentsInChildren<Transform>(); Debug.Log(pushobjs); if (Room6PushPositions != null)
+                {
+                    for (int i = 0; i < Room6PushPositions.Count - 1; i++)
+                    {
+                        pushobjs[i].position = Room6PushPositions[i];
+                    }
+                }
+                break;
+            default: light2D.GetComponent<Light2D>().intensity = 0.1f; break;
         }
     }
 
     public void LoadScene(string sceneName)
     {
         lastSceneName = SceneManager.GetActiveScene().name;
+
+        if (SceneManager.GetActiveScene().name == "MalirRoom6")
+        {
+            if (Room6PushPositions.Count == 0)
+            {
+                for (int i = 0; i < pushobjs.Length - 1; i++)
+                {
+                    Room6PushPositions.Add(pushobjs[i].position);
+                }
+            }
+            for (int i = 0; i < pushobjs.Length - 1; i++)
+            {
+                Room6PushPositions[i] = pushobjs[i].position;
+            }
+        }
         StartCoroutine(LoadLevel(sceneName));
     }
     public void LoadScene(string sceneName, string position)
@@ -236,6 +271,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Sprite sprite = Resources.Load<Sprite>("Sprites/" + item.IconName);
             this.ItemListGM.Add(new Item() { Name = item.Name, Icon = sprite, Description = item.Description });
         }
+        statueFixed = data.statueFixed;
+        puzzleOneIsFinished = data.puzzleOneFinished;
+        Room6PushPositions = data.Room6PushPositions;
+        malirroom1item = data.itemOneGrabbed;
+        InitDialogueM6 = data.M6Init;
     }
 
     public void SaveData(ref GameData data)
@@ -249,6 +289,27 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             data.ItemList.Add(new ItemIM() { Name = item.Name, IconName = item.Icon.name, Description = item.Description });
         }
+        data.statueFixed = statueFixed;
+        data.puzzleOneFinished = puzzleOneIsFinished;
+
+
+        if (SceneManager.GetActiveScene().name == "MalirRoom6")
+        {
+            if (Room6PushPositions.Count == 0)
+            {
+                for (int i = 0; i < pushobjs.Length - 1; i++)
+                {
+                    Room6PushPositions.Add(pushobjs[i].position);
+                }
+            }
+            for (int i = 0; i < pushobjs.Length - 1; i++)
+            {
+                Room6PushPositions[i] = pushobjs[i].position;
+            }
+        }
+        data.Room6PushPositions = Room6PushPositions;
+        data.itemOneGrabbed = malirroom1item;
+        data.M6Init = InitDialogueM6;
     }
 
     private void updateHearts()
