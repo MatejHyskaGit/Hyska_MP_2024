@@ -274,8 +274,9 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                dialogueText.maxVisibleCharacters++;
+                
                 yield return new WaitForSeconds(typingSpeed);
+                dialogueText.maxVisibleCharacters++;
             }
         }
 

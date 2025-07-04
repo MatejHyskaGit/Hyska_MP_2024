@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "HyskaMP2024.sln"
+    "dotnet.defaultSolution": "Hyska_MP_2024.sln"
 }

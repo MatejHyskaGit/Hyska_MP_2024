@@ -12,13 +12,13 @@ public class ItemNeedScript : MonoBehaviour
 
         if (sceneName == "MalirRoom3")
         {
-            Debug.Log("MalirRoom3");
+            //Debug.Log("MalirRoom3");
             if (item.Name == "Opracovaný kámen")
             {
-                Debug.Log("Opracovaný kámen");
+                //Debug.Log("Opracovaný kámen");
                 if (calledObject.name == "ItemNeederMid" && !GameManager.instance.statueFixed)
                 {
-                    Debug.Log("Success");
+                    //Debug.Log("Success");
                     GameManager.instance.statueFixed = true;
                     GameManager.instance.RemoveItem(item);
                 }

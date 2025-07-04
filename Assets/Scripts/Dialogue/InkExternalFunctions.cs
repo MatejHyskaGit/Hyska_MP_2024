@@ -148,16 +148,19 @@ public class InkExternalFunctions
         {
             story.BindExternalFunction("getFlowerSack", () =>
             {
+                Time.timeScale = 0f;
                 Sprite sprite = Resources.Load<Sprite>("Sprites/sacek");
-                Item item = new Item { Name = "Sáček s květinama", Icon = sprite, Description = "Tohle musím donést malíři" };
+                Item item = new Item { Name = "Sáček s květinami", Icon = sprite, Description = "Tohle musím donést malíři" };
                 GameManager.instance.AddItem(item);
             });
             story.BindExternalFunction("getHeart", () =>
             {
+                Time.timeScale = 0f;
                 GameManager.instance.GetHeart();
             });
             story.BindExternalFunction("loseHeart", () =>
             {
+                Time.timeScale = 0f;
                 GameManager.instance.LoseHeart();
             });
         }
@@ -180,6 +183,7 @@ public class InkExternalFunctions
         {
             story.BindExternalFunction("takeRatDamage", () =>
             {
+                Time.timeScale = 0f;
                 GameManager.instance.LoseHeart();
             });
             story.BindExternalFunction("decrementRatIndex", () =>

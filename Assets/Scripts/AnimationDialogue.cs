@@ -36,5 +36,7 @@ public class AnimationDialogue : MonoBehaviour
         GameManager.instance.NathanielGone = true;
 
         GameManager.instance.loading = false;
+
+        GameObject.Find("NPCNathaniel").transform.GetChild(1).gameObject.SetActive(false);
     }
 }

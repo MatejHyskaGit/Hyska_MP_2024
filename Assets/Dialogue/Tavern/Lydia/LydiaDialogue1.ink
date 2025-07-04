@@ -23,7 +23,7 @@ Máš nějaké otázky?
     Ostatně, hádky by tady k ničemu nevedly.
     Třeba tady Arthur, nikdy jsem ho neviděla rozhozeného, skvěle vypráví příběhy a vždycky ví, co se kde děje, každý ho tu má rád.
     Anthony a Gary, sedí tu každý večer, hrají kostky a mluví o tom, jak jednou procestují celou Elvië, nikdo jim to nevěří.
-    Nebo Dior s Charlie nejlepší příelkyně, nikdy neuvidíš jednu bez druhé.
+    Nebo Dior s Charlie nejlepší přítelkyně, nikdy neuvidíš jednu bez druhé.
     Pak tu jsou takoví podivíni, jako je Francis, zajímá se jen o svoje kytky a jak z nich udělá barvu, nikdy nechodí ven.
     A pak je tu Octavio...
     Býval to věděc a pořád ho to tak nějak neopustilo, jeho dům je cítit kyselinou a má kolem sebe takovou divnou nazelenalou mlhu.

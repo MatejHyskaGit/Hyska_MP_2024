@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [NonSerialized]
     public bool InitDialogueM6 = false;
 
+
     void Awake()
     {
         if (instance == null)
@@ -276,6 +277,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         Room6PushPositions = data.Room6PushPositions;
         malirroom1item = data.itemOneGrabbed;
         InitDialogueM6 = data.M6Init;
+        NathanielGone = data.nathanielGone;
     }
 
     public void SaveData(ref GameData data)
@@ -310,6 +312,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.Room6PushPositions = Room6PushPositions;
         data.itemOneGrabbed = malirroom1item;
         data.M6Init = InitDialogueM6;
+        data.nathanielGone = NathanielGone;
     }
 
     private void updateHearts()

@@ -1699,8 +1699,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.106000006, y: 0.43474996, z: 0}
-    m_Extent: {x: 0.7443, y: 1.00675, z: 0}
+    m_Center: {x: -0.1137, y: 0.43299997, z: 0}
+    m_Extent: {x: 0.7529, y: 0.9984, z: 0}
   m_PointLightInnerAngle: 67.44
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -2821,8 +2821,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.20069999, y: 0.44009998, z: 0}
-    m_Extent: {x: 0.8352, y: 1.0086, z: 0}
+    m_Center: {x: -0.20210001, y: 0.44324997, z: 0}
+    m_Extent: {x: 0.84169996, y: 1.00475, z: 0}
   m_PointLightInnerAngle: 67.44
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -3021,7 +3021,7 @@ SpriteRenderer:
   m_SortingLayerID: 1008413457
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5340408188bd6de47a83cb408fa3e361, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a3653e1a824085f4d867a95776660fdd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3291,8 +3291,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.1336, y: 0.47094998, z: 0}
-    m_Extent: {x: 0.8778, y: 1.04255, z: 0}
+    m_Center: {x: -0.13829997, y: 0.47309998, z: 0}
+    m_Extent: {x: 0.8665, y: 1.0424, z: 0}
   m_PointLightInnerAngle: 67.44
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -5408,8 +5408,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.07859999, y: 0.40655, z: 0}
-    m_Extent: {x: 0.7113, y: 0.97345, z: 0}
+    m_Center: {x: -0.07225001, y: 0.41480002, z: 0}
+    m_Extent: {x: 0.71305, y: 0.9769, z: 0}
   m_PointLightInnerAngle: 67.44
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -10897,8 +10897,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.006700009, y: 0.4061, z: 0}
-    m_Extent: {x: 0.8656, y: 0.97459996, z: 0}
+    m_Center: {x: 0.0022000074, y: 0.39959997, z: 0}
+    m_Extent: {x: 0.8585, y: 0.9744, z: 0}
   m_PointLightInnerAngle: 67.44
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -11010,6 +11010,7 @@ GameObject:
   - component: {fileID: 1704168501}
   - component: {fileID: 1704168502}
   - component: {fileID: 1704168503}
+  - component: {fileID: 1704168504}
   m_Layer: 0
   m_Name: Nathaniel
   m_TagString: Untagged
@@ -11066,6 +11067,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb95d7156f986749ba5497a68df89f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1704168504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704168500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23060f76625dc734c99b18093c20be2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1741737636
@@ -11134,8 +11147,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.016149998, y: 0.7384, z: 0}
-    m_Extent: {x: 0.81615, y: 1.1066, z: 0}
+    m_Center: {x: -0.023449987, y: 0.73749995, z: 0}
+    m_Extent: {x: 0.81235003, y: 1.1078, z: 0}
   m_PointLightInnerAngle: 48.06
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -11570,6 +11583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1842289821}
   - component: {fileID: 1842289822}
+  - component: {fileID: 1842289823}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -11611,11 +11625,31 @@ MonoBehaviour:
   - {fileID: 94925360}
   - {fileID: 1898540650}
   - {fileID: 168575933}
-  Nathaniel: {fileID: 481170637}
-  NathanielTable: {fileID: 522024341}
+  Nathaniel: {fileID: 1704168500}
   NathanielNPC: {fileID: 1354647903}
   MRoom1NPCList: []
   MRoom3NPCList: []
+--- !u!95 &1842289823
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842289820}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa5720e3a6f5eee489276ff223e781e0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1844568159
 PrefabInstance:
   m_ObjectHideFlags: 0

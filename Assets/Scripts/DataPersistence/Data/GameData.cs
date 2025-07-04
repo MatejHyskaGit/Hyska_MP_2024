@@ -16,6 +16,7 @@ public class GameData
     public List<Vector3> Room6PushPositions;
     public bool itemOneGrabbed;
     public bool M6Init;
+    public bool nathanielGone;
 
     public GameData()
     {
@@ -30,5 +31,6 @@ public class GameData
         this.Room6PushPositions = new List<Vector3>();
         this.itemOneGrabbed = false;
         this.M6Init = false;
+        this.nathanielGone = false;
     }
 }

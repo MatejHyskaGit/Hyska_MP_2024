@@ -171,7 +171,7 @@ public class DiceGameManager : MonoBehaviour
     {
         var random = new System.Random();
         int randomnum = random.Next(1, 7);
-        Debug.Log(randomnum);
+        //Debug.Log(randomnum);
         diceAnimators[dieIndex].enabled = false;
         diceImages[dieIndex].sprite = diceSprites[randomnum - 1];
         if (opponent)
@@ -215,6 +215,7 @@ public class DiceGameManager : MonoBehaviour
 
     void NewGame()
     {
+        GameManager.instance.loading = true;
         opponent = true;
 
         playerText.enabled = true;
@@ -241,6 +242,7 @@ public class DiceGameManager : MonoBehaviour
 
     void InitializeGame()
     {
+        GameManager.instance.loading = true;
         opponent = true;
 
         pressed = false;
@@ -375,6 +377,7 @@ public class DiceGameManager : MonoBehaviour
         playText.text = "Hrát";
         selectedIndex = 0;
         wait = false;
+        GameManager.instance.loading = false;
         diePopupObject.SetActive(false);
         DialogueTrigger trigger = AnthonyNPC.GetComponentInChildren<DialogueTrigger>();
         switch (resultText.text)
